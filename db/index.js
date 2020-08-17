@@ -41,6 +41,40 @@ commerce.soldAll = () => {
     });
 };
 
+commerce.bestSeller = () => {
+    return new Promise ((resolve,reject) => {
+        pool.query(`SELECT item_id, items.name, items.item_price, COUNT(sold_items.id) bs FROM sold_items INNER JOIN items ON items.id=item_id GROUP BY item_id,items.name, items.item_price ORDER BY bs DESC`, (error,results) => {
+            if(error){
+                return reject(error);
+            }
+            return resolve(results);
+        });
+    });
+};
+
+commerce.mostExpensive = () => {
+    return new Promise ((resolve,reject) => {
+        pool.query(`SELECT item_id,name,item_price, COUNT (sold_items.id) number FROM sold_items INNER JOIN items ON items.id = item_id GROUP BY item_id,items.name HAVING COUNT(sold_items.id)>=3 ORDER BY item_price DESC`, (error,results) => {
+            if(error){
+                return reject(error);
+            }
+            return resolve(results);
+        });
+    });
+};
+
+commerce.dateSold = (month) => {
+    return new Promise ((resolve,reject) => {
+
+        pool.query(`SELECT item_id,date_sold,items.name FROM sold_items INNER JOIN items ON items.id=item_id WHERE MONTH(date_sold)!=? GROUP BY items.name`,[month], (error,results) => {
+            if(error){
+                return reject(error);
+            }
+            return resolve(results);
+        });
+    });
+};
+
 
 commerce.addSale = (items,newDate) => {
     return new Promise ((resolve,reject) => {
@@ -56,10 +90,7 @@ commerce.addSale = (items,newDate) => {
            {
             queryString += `(${item.item_id},'${newDate}'), `
            }
-
-
         });
-
         pool.query( queryString, (error,results) => {
             
             if(error){
@@ -71,4 +102,14 @@ commerce.addSale = (items,newDate) => {
     });
 };
 
+commerce.types = () => {
+    return new Promise ((resolve,reject) => {
+        pool.query(`SELECT id,type_name FROM items_type;`, (error,results) => {
+            if(error){
+                return reject(error);
+            }
+            return resolve(results);
+        });
+    });
+};
 module.exports= commerce;

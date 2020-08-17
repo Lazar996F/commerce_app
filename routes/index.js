@@ -38,4 +38,46 @@ router.get('/sold', async (req,res) => {
     }
 });
 
+router.get('/sold/bs', async (req,res) => {
+    try{
+        let results= await db.bestSeller();
+        res.json(results);
+    }catch(e) {
+        console.log(e);
+        res.sendStatus(500);
+    }
+});
+router.get('/sold/3x', async (req,res) => {
+    try{
+        let results= await db.mostExpensive();
+        res.json(results);
+    }catch(e) {
+        console.log(e);
+        res.sendStatus(500);
+    }
+});
+
+
+router.get('/sold/:month', async (req,res) => {
+    try{
+        let results= await db.dateSold(req.params.month);
+        res.json(results);
+    }catch(e) {
+        console.log(e);
+        res.sendStatus(500);
+    }
+});
+
+router.get('/types', async (req,res) => {
+    try{
+        let results= await db.types();
+        res.json(results);
+    }catch(e) {
+        console.log(e);
+        res.sendStatus(500);
+    }
+});
+
+
+
 module.exports = router;
