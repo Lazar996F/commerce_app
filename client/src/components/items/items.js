@@ -4,6 +4,7 @@ import './items.css';
 import 'bootstrap/dist/css/bootstrap.css';
 import { Table, Button, Form, Row, Col, Container } from 'react-bootstrap'
 
+
 class Items extends Component {
 
   constructor() {
@@ -16,9 +17,10 @@ class Items extends Component {
       itemTypes: [],
       message: '',
       msgItem:'',
+      msgDelete:'',
       newPrice: 0,
       typeValue: 0,
-      typeName: ''
+      typeName: '',
     }
   }
 
@@ -34,16 +36,13 @@ class Items extends Component {
       .then(itemTypes => this.setState({ itemTypes }, () => console.log('Item types fetched..', itemTypes)))
   }
 
-
-
-
-
   addToCart = (id, name, price) => {
     let { addedCart } = this.state;
     let addedItem = { item_id: id, name: name, price: price };
     addedCart.push(addedItem);
     this.setState({ addedCart });
   }
+
 
   removeFromCart = (DELid) => {
     const { addedCart } = this.state
@@ -67,6 +66,7 @@ class Items extends Component {
     const items = addedCart.map(x => {
       return { item_id: x.item_id }
     })
+
     const requestOptions = {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
@@ -79,11 +79,11 @@ class Items extends Component {
     if (data.status == 'success') {
       this.setState({ addedCart: [], message: 'Successfully' }, () => {
         setTimeout(() => {
-          this.setState({ message: '' })
+          this.setState({ message:''})
         }, 5000);
       })
     } else if (data.status == 'faild') {
-      this.setState({ addedCart: [], message: 'Faild to add' })
+      this.setState({ addedCart: [], message:'Faild to add'})
     }
   };
 
@@ -95,6 +95,7 @@ class Items extends Component {
     };
     const response = await fetch('/api/new/item', requestOptions);
     const data = await response.json();
+    
     console.log('objekat',data, this.state.newPrice )
     if (data.status == 'success') {
       this.setState({ msgItem: 'Successfully' }, () => {
@@ -103,15 +104,39 @@ class Items extends Component {
         }, 5000);
       })
     } else if (data.status == 'faild') {
-      this.setState({ msgItem: 'Faild to add' })
+      this.setState({ msgItem: 'faild to add' })
     }
+}
+
+async deleteItem(deleteID) {
+
+  const requestOptions = {
+      method: 'DELETE',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ id: deleteID })
+  };
+
+  const response = await fetch('/api/delete', requestOptions);
+  const data = await response.json();
+
+
+  if (data.status == 'success') {
+    this.setState({ msgDelete: 'Successfully deleted' }, () => {
+      setTimeout(() => {
+        this.setState({ msgDelete: ''})
+      }, 5000);
+    })
+
+  } else if (data.status == 'faild') {
+    this.setState({ msgDelete: 'Faild to delete'})
+  }
 }
 
   render() {
     return (
       <div>
-        <h2 className="text-center mt-5 pt-5 mb-5">ALL ITEMS</h2>
-        <Table striped bordered hover>
+        <h2 className="text-center mt-5 pt-5 mb-5">ALL ITEMS FOR SALE</h2>
+        <Table striped bordered>
           <thead>
             <tr>
               <th>#</th>
@@ -135,7 +160,7 @@ class Items extends Component {
               </tr>))}
           </tbody>
         </Table>
-        <h3 className="mt-5 pl-5 mb-3">SELL ITEM</h3>
+        <h4 className="mt-5 pl-5 mb-3">SELL ITEM</h4>
         <Table className="w-50">
           <thead>
             <tr>
@@ -176,7 +201,6 @@ class Items extends Component {
                 {this.state.itemTypes.map((type, index) => (
                   <option value={type.id} key={index}>{type.type_name}</option>
                 ))}
-
               </Form.Control>
             </Form.Group>
             <Form.Group as={Col} controlId="formGridZip">
@@ -187,6 +211,34 @@ class Items extends Component {
           <Button onClick={() => this.setNewItem()} variant="primary">Add item</Button>
           <p className="ml-5">{this.state.msgItem}</p>
         </Container>
+
+        
+    <h2 className="text-center mt-5 pt-5 mb-5">DELETE ITEM</h2>
+        <Table striped bordered>
+          <thead>
+            <tr>
+              <th>#</th>
+              <th>ITEM NAME</th>
+              <th>ITEM TYPE</th>
+              <th>PRICE $</th>
+              <th></th>
+            </tr>
+          </thead>
+          <tbody>
+            {this.state.items.map((item, index) => (
+              <tr>
+                <td>{index + 1}</td>
+                <td>{item.name}</td>
+                <td>{item.
+                  type_name}</td>
+                <td>{item.item_price}</td>
+                <td>
+                <Button variant="outline-danger" onClick={() => { this.deleteItem(item.id)}} >Delete</Button>
+                </td>
+              </tr>))}
+          </tbody>
+        </Table>
+        <p className="ml-5">{this.state.msgDelete}</p>
       </div>
     );
   }

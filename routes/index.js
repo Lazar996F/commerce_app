@@ -7,7 +7,7 @@ const router = express.Router();
 router.get('/items', async (req,res) => {
 
     try{ 
-        let results= await db.all();
+        let results= await db.allItems();
         res.json(results);
          
     }catch(e) {
@@ -91,8 +91,14 @@ router.post('/new/item', async (req,res) => {
     }
 });
 
-
-
-
+router.delete('/delete', async (req,res) => {
+    try{
+        let del = await db.deleteItem(req.body.id);
+        res.json(del);
+    }catch(e) {
+        console.log('greska',e);
+        res.sendStatus(500);
+    }
+});
 
 module.exports = router;

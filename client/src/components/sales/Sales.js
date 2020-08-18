@@ -143,8 +143,6 @@ class Sales extends Component {
           </tbody>
         </Table>)}
 
-
-
         {/* items not sold in x month  */}
         {this.state.isMonth && (<Table striped bordered hover>
           <thead>
