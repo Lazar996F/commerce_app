@@ -50,7 +50,7 @@ class Sales extends Component {
     return (
       <div>
         <Button onClick={() => this.setState({ isBS:false, isME:false ,isAll:true})} variant="info" size="lg" className="main-btn">
-          List of all sold items
+          List of sales records
         </Button>
 
         <Container className="mb-5">

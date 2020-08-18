@@ -36,6 +36,8 @@ router.get('/sold', async (req,res) => {
         console.log(e);
         res.sendStatus(500);
     }
+
+    
 });
 
 router.get('/sold/bs', async (req,res) => {
@@ -77,6 +79,19 @@ router.get('/types', async (req,res) => {
         res.sendStatus(500);
     }
 });
+
+//DODAVANJE NOVOG ITEMA 
+router.post('/new/item', async (req,res) => {
+    try{
+        let add = await db.addItem(req.body.name,req.body.item_type_id, req.body.price);
+        res.json(add);
+    }catch(e) {
+        console.log('greska ',e);
+        res.sendStatus(500);
+    }
+});
+
+
 
 
 

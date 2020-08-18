@@ -2,7 +2,7 @@
 import React, { Component } from 'react';
 import './items.css';
 import 'bootstrap/dist/css/bootstrap.css';
-import { Table, Button,Form,Row,Col,Container } from 'react-bootstrap'
+import { Table, Button, Form, Row, Col, Container } from 'react-bootstrap'
 
 class Items extends Component {
 
@@ -13,10 +13,12 @@ class Items extends Component {
       sold: [],
       addSale: [],
       addedCart: [],
-      itemTypes:[],
+      itemTypes: [],
       message: '',
-      newPrice:0,
-      newType:0,
+      msgItem:'',
+      newPrice: 0,
+      typeValue: 0,
+      typeName: ''
     }
   }
 
@@ -27,7 +29,7 @@ class Items extends Component {
     fetch('api/sold')
       .then(res => res.json())
       .then(sold => this.setState({ sold }, () => console.log('Items fetched..', sold)))
-      fetch('api/types')
+    fetch('api/types')
       .then(res => res.json())
       .then(itemTypes => this.setState({ itemTypes }, () => console.log('Item types fetched..', itemTypes)))
   }
@@ -48,9 +50,7 @@ class Items extends Component {
     let removeIndex = addedCart.map(function (item) { return item.id }).indexOf(DELid);
     addedCart.splice(removeIndex, 1);
     this.setState({ addedCart });
-
   }
-
 
   totalPrice = () => {
     const { addedCart } = this.state
@@ -59,11 +59,8 @@ class Items extends Component {
     addedCart.map(x => {
       counter += x.price
     })
-
     return counter.toFixed(1);
   }
-
-
 
   async addSale() {
     const { addedCart } = this.state
@@ -90,13 +87,25 @@ class Items extends Component {
     }
   };
 
-  setNewItem = (typeID,newName,newPrice) => {
-
-
-  }
-
-  
-
+  async setNewItem() {
+    const requestOptions = {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ name: this.state.typeName, item_type_id: this.state.typeValue, price: this.state.newPrice  })
+    };
+    const response = await fetch('/api/new/item', requestOptions);
+    const data = await response.json();
+    console.log('objekat',data, this.state.newPrice )
+    if (data.status == 'success') {
+      this.setState({ msgItem: 'Successfully' }, () => {
+        setTimeout(() => {
+          this.setState({ msgItem: '' })
+        }, 5000);
+      })
+    } else if (data.status == 'faild') {
+      this.setState({ msgItem: 'Faild to add' })
+    }
+}
 
   render() {
     return (
@@ -126,7 +135,7 @@ class Items extends Component {
               </tr>))}
           </tbody>
         </Table>
-        <h3 className="mt-5 pl-5 mb-3">CART</h3>
+        <h3 className="mt-5 pl-5 mb-3">SELL ITEM</h3>
         <Table className="w-50">
           <thead>
             <tr>
@@ -153,30 +162,31 @@ class Items extends Component {
         </div>
         <p className="ml-5">{this.state.message}</p>
 
-      <Container fluid className="mb-5 pb-5 mt-5">
-        <h2 className="text-center">ADD NEW ITEM</h2>
-        <Form.Row>
-          <Form.Group as={Col} controlId="formGridCity">
-            <Form.Label>Item name</Form.Label>
-            <Form.Control onChange={(event)=>this.setState({typeName:event.target.value})} type="text"/>
-          </Form.Group>
+        <Container fluid className="mb-5 pb-5 mt-5">
+          <h2 className="text-center">INSERT NEW ITEM</h2>
+          <Form.Row>
+            <Form.Group as={Col} controlId="formGridCity">
+              <Form.Label>Item name</Form.Label>
+              <Form.Control onChange={(event) => this.setState({ typeName: event.target.value })} type="text" />
+            </Form.Group>
 
-          <Form.Group as={Col} controlId="formGridState">
-            <Form.Label>Type</Form.Label>
-            <Form.Control as="select" defaultValue="Choose">
-              {this.state.itemTypes.map((type,index) => (
-                <option value={type.id} key={index}>{type.type_name}</option>
-              ))}
+            <Form.Group as={Col} controlId="formGridState">
+              <Form.Label>Type</Form.Label>
+              <Form.Control as="select" defaultValue="Chose" onChange={(e) => this.setState({ typeValue: e.target.value })}>
+                {this.state.itemTypes.map((type, index) => (
+                  <option value={type.id} key={index}>{type.type_name}</option>
+                ))}
 
-            </Form.Control>
-          </Form.Group>
-          <Form.Group as={Col} controlId="formGridZip">
-            <Form.Label>Price [ $ ]</Form.Label>
-            <Form.Control onChange={(event)=>this.setState({newPrice:event.target.value})}/>
-          </Form.Group>
-        </Form.Row>
-        <Button onClick={() => console.log("tip itema>>",this.state.newType)} variant="primary">Add item</Button>
-      </Container>
+              </Form.Control>
+            </Form.Group>
+            <Form.Group as={Col} controlId="formGridZip">
+              <Form.Label>Price [ $ ]</Form.Label>
+              <Form.Control onChange={(event) => this.setState({ newPrice: event.target.value })} />
+            </Form.Group>
+          </Form.Row>
+          <Button onClick={() => this.setNewItem()} variant="primary">Add item</Button>
+          <p className="ml-5">{this.state.msgItem}</p>
+        </Container>
       </div>
     );
   }
