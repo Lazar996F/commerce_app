@@ -83,8 +83,12 @@ router.get('/types', async (req,res) => {
 //DODAVANJE NOVOG ITEMA 
 router.post('/new/item', async (req,res) => {
     try{
+
+        
         let add = await db.addItem(req.body.name,req.body.item_type_id, req.body.price);
         res.json(add);
+       
+        
     }catch(e) {
         console.log('greska ',e);
         res.sendStatus(500);

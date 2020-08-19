@@ -6,13 +6,20 @@ import { BrowserRouter as Router, Route } from "react-router-dom";
 import * as serviceWorker from './serviceWorker';
 import Items from './components/items/items'
 import Sales from './components/sales/Sales'
+import Add from './components/add_item/add'
+import DeleteItem from './components/delete_item/deleteItem'
+
+
 
 ReactDOM.render(
   <React.StrictMode>
       <Router>
         <App />
-          <Route exact path="/" component={Items} />
+          <Route  path="/items" component={Items} />
           <Route path="/sales" component={Sales} />
+          <Route path="/add" component={Add}/>
+          <Route path="/delete" component={DeleteItem}/>
+
       </Router>
   </React.StrictMode>,
   document.getElementById('root')

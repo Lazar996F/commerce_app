@@ -21,7 +21,7 @@ class Sales extends Component {
       isMonth:false,
       selectedMonth:0
     }
-  }
+  }  
 
   componentDidMount() {
     fetch('api/sold')

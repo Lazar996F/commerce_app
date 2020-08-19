@@ -11,7 +11,7 @@ const Navs = () => {
         <Navbar bg="dark" variant="dark">
             <Navbar.Brand>E-commerce</Navbar.Brand>
             <Nav className="mr-auto">
-                <Nav.Link as={Link} to="/">Items</Nav.Link>
+                <Nav.Link as={Link} to="/items">Items</Nav.Link>
             </Nav>
             <Nav className="mr-auto">
                 <Nav.Link as={Link} to="/sales">Sales</Nav.Link>
