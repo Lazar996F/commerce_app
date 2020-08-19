@@ -17,7 +17,7 @@ class Add extends Component {
           msgItem:'',
           newPrice: 0,
           typeValue: 0,
-          typeName: '',
+          typeName: null,
         }
       }
 

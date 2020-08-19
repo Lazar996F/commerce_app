@@ -18,7 +18,7 @@ class Items extends Component {
       message: '',
       newPrice: 0,
       typeValue: 0,
-      typeName: '',
+      typeName: ''
     }
   }
 

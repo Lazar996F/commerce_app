@@ -19,11 +19,12 @@ commerce.allItems = () => {
 
         pool.query(`SELECT i.id, i.name, i.item_price, it.type_name FROM items AS i INNER JOIN items_type AS it ON i.item_type_id = it.id WHERE is_deleted=0`, (error,results) => {
             if(error){
-                return reject(error);
+                reject(error);
             }
-            return resolve(results);
+            resolve(results);
         });
     });
+ 
 };
 
 //SVI PRODATI ITEMI
@@ -115,8 +116,8 @@ commerce.types = () => {
 commerce.addItem = (name,typeID,price) => {
     return new Promise ((resolve,reject) => {
 
-        pool.query(`INSERT INTO items (name,item_type_id,item_price,is_deleted) VALUES ('${name}',${typeID},${price},0);`, (error,results) => {
-
+  
+        pool.query(`INSERT INTO items (name,item_type_id,item_price) VALUES (?, ?, ?);`, [name, typeID, price].map((value) => {return value === '' ? null : value}), (error) => {
             if(error){
                 return resolve({status: "faild",
                     error: error});
@@ -129,7 +130,7 @@ commerce.addItem = (name,typeID,price) => {
 commerce.deleteItem = (delID) => {
 
     return new Promise ((resolve,reject)=> {
-        pool.query(`UPDATE items SET is_deleted=1 WHERE id=${delID}`, (error,results) => {
+        pool.query(`UPDATE items SET is_deleted=1 WHERE id=${delID}`, (error) => {
 
             if(error){
                 return resolve({status: "faild", error:error});
@@ -140,4 +141,4 @@ commerce.deleteItem = (delID) => {
 };
 
 
-module.exports= commerce;
+module.exports = commerce;

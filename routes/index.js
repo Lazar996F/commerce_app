@@ -16,8 +16,9 @@ router.get('/items', async (req,res) => {
     }
 });
 
-// UPIS NOVOG ITEMA
+
 router.post('/add/sale', async (req,res) => {
+    
     try{
         let add = await db.addSale(req.body.items,req.body.date_sold);
         res.json(add);
@@ -27,17 +28,16 @@ router.post('/add/sale', async (req,res) => {
     }
 });
 
-router.get('/sold', async (req,res) => {
+router.get('/sold', async (req,res,next) => {
 
     try{
         let results= await db.soldAll();
-        res.json(results); // promjenjiva kupi iz baze sve
+        res.json(results);
     }catch(e) {
         console.log(e);
         res.sendStatus(500);
     }
 
-    
 });
 
 router.get('/sold/bs', async (req,res) => {
@@ -80,20 +80,22 @@ router.get('/types', async (req,res) => {
     }
 });
 
-//DODAVANJE NOVOG ITEMA 
+
+
 router.post('/new/item', async (req,res) => {
     try{
 
-        
-        let add = await db.addItem(req.body.name,req.body.item_type_id, req.body.price);
-        res.json(add);
+            let add = await db.addItem(req.body.name,req.body.item_type_id, req.body.price);
+            res.json(add);   
+    
        
-        
+            
     }catch(e) {
-        console.log('greska ',e);
         res.sendStatus(500);
     }
 });
+
+
 
 router.delete('/delete', async (req,res) => {
     try{
