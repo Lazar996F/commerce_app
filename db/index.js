@@ -140,5 +140,18 @@ commerce.deleteItem = (delID) => {
     });
 };
 
+commerce.editItem = (name,type,price,id) => {
+
+    return new Promise ((resolve,reject)=> {
+        pool.query(`UPDATE items SET name=?, item_type_id=?,item_price=? WHERE id=?`,[name,type,price,id], (error) => {
+
+            if(error){
+                return resolve({status: "faild", error:error});
+            }
+            return resolve({status:"success"});
+        });
+    });
+};
+
 
 module.exports = commerce;

@@ -8,6 +8,7 @@ import Items from './components/items/items'
 import Sales from './components/sales/Sales'
 import Add from './components/add_item/add'
 import DeleteItem from './components/delete_item/deleteItem'
+import Edit_item from './components/Edit/edit_item'
 
 
 
@@ -19,6 +20,7 @@ ReactDOM.render(
           <Route path="/sales" component={Sales} />
           <Route path="/add" component={Add}/>
           <Route path="/delete" component={DeleteItem}/>
+          <Route path="/edit" component={Edit_item}/>
 
       </Router>
   </React.StrictMode>,

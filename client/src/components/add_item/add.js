@@ -6,6 +6,7 @@ import { Table, Button, Form, Row, Col, Container,Alert } from 'react-bootstrap'
 
 
 
+
 class Add extends Component {
   
     constructor() {
@@ -44,7 +45,7 @@ class Add extends Component {
         if (data.status == 'success') {
           this.setState({ msgItem: 'Successfully added a new item :)' }, () => {
             setTimeout(() => {
-              this.setState({ msgItem: '' })
+              this.setState({ msgItem: ''})
             }, 2000);
           })
         } else if (data.status == 'faild') {

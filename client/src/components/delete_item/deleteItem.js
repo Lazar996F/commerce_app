@@ -70,8 +70,7 @@ class DeleteItem extends Component {
               <tr>
                 <td>{index + 1}</td>
                 <td>{item.name}</td>
-                <td>{item.
-                  type_name}</td>
+                <td>{item.type_name}</td>
                 <td>{item.item_price}</td>
                 <td>
                 <Button variant="outline-danger" onClick={() => { this.deleteItem(item.id,index)}} >Delete</Button>

@@ -107,4 +107,15 @@ router.delete('/delete', async (req,res) => {
     }
 });
 
+
+
+router.put('/edit', async (req,res) => {
+    try{
+        let edd = await db.editItem(req.body.name,req.body.item_type_id,req.body.price,req.body.id);
+        res.json(edd);
+    }catch(e){
+        res.sendStatus(500);
+    }
+});
+
 module.exports = router;

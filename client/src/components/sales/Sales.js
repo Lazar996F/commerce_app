@@ -79,14 +79,14 @@ class Sales extends Component {
         </Container>
 
         {/* ALL SOLD items */}
-        {this.state.isAll && (<Table striped bordered hover>
+        {this.state.isAll && (<Table striped bordered>
           <thead>
             <tr>
               <th>#</th>
               <th>ITEM NAME</th>
               <th>ITEM TYPE</th>
               <th>PRICE</th>
-              <th>DATE of SALE</th>
+              <th>Sell date</th>
             </tr>
           </thead>
           <tbody>
@@ -101,6 +101,7 @@ class Sales extends Component {
           </tbody>
         </Table>)}
 
+      
         {/* BESTSELLER */}
         {this.state.isBS && (<Table striped bordered hover>
           <thead>
