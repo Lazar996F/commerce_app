@@ -20,4 +20,5 @@ const Navs = () => {
     )
 }
 
+
 export default Navs

@@ -34,6 +34,7 @@ class Items extends Component {
       .then(itemTypes => this.setState({ itemTypes }, () => console.log('Item types fetched..', itemTypes)))
   }
 
+  
   addToCart = (id, name, price) => {
     let { addedCart } = this.state;
     let addedItem = { item_id: id, name: name, price: price };
@@ -87,7 +88,7 @@ class Items extends Component {
   render() {
     
     return (
-      <div>
+      <Container fluid>
         <h2 className="text-center mt-5 pt-5 mb-5">ALL ITEMS FOR SALE</h2>
         <Table striped bordered>
           <thead>
@@ -134,13 +135,12 @@ class Items extends Component {
               </tr>))}
           </tbody>
         </Table>
-        <div class="d-flex justify-content-between totalPadding">
+        <div className="d-flex justify-content-between totalPadding">
           <Button onClick={() => this.addSale()} className="ml-5 mt-3 mb-5">SUBMIT</Button>
           <h4 className="mt-3">TOTAL: {this.totalPrice()} $</h4>
         </div>
         <p className="ml-5">{this.state.message}</p>
-
-      </div>
+      </Container>
     );
   }
 }

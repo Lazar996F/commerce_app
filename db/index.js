@@ -17,7 +17,7 @@ commerce.allItems = () => {
 
     return new Promise ((resolve,reject) => {
 
-        pool.query(`SELECT i.id, i.name, i.item_price, it.type_name FROM items AS i INNER JOIN items_type AS it ON i.item_type_id = it.id WHERE is_deleted=0`, (error,results) => {
+        pool.query(`SELECT i.id, i.name, i.item_price,i.item_type_id, it.type_name FROM items AS i INNER JOIN items_type AS it ON i.item_type_id = it.id WHERE is_deleted=0`, (error,results) => {
             if(error){
                 reject(error);
             }
@@ -141,13 +141,14 @@ commerce.deleteItem = (delID) => {
 };
 
 commerce.editItem = (name,type,price,id) => {
-
+    
     return new Promise ((resolve,reject)=> {
         pool.query(`UPDATE items SET name=?, item_type_id=?,item_price=? WHERE id=?`,[name,type,price,id], (error) => {
 
             if(error){
-                return resolve({status: "faild", error:error});
+                return resolve({status:"faild", error:error});
             }
+
             return resolve({status:"success"});
         });
     });

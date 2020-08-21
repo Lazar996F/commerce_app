@@ -74,6 +74,7 @@ class Sales extends Component {
                 <Dropdown.Item  eventKey={11}>November</Dropdown.Item>
                 <Dropdown.Item  eventKey={12}>December</Dropdown.Item>
               </Dropdown.Menu>
+              
             </Dropdown>
           </Row>
         </Container>

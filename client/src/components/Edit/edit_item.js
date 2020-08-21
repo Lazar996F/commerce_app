@@ -23,7 +23,7 @@ class Edit_item extends Component {
           chosenPrice:0,
           chosenID:0,
           chosenTypeName:'',
-
+          IDtype:0
         }
       }
 
@@ -51,18 +51,18 @@ class Edit_item extends Component {
           </thead>
           <tbody>
             {this.state.items.map((item, index) => (
-              <tr>
+              <tr key={index}>
                 <td>{index + 1}</td>
                 <td>{item.name}</td>
                 <td>{item.type_name}</td>
                 <td>{item.item_price}</td>
                 <td>
-                  <Button onClick={()=> this.setState({showModal:true,chosenID:item.id,chosenName:item.name,chosenPrice:item.item_price,chosenTypeName:item.type_name})}>Edit</Button>
+                  <Button onClick={()=> this.setState({showModal:true,chosenID:item.id,IDtype:item.item_type_id,chosenName:item.name,chosenPrice:item.item_price,chosenTypeName:item.type_name})}>Edit</Button>
                 </td>
               </tr>))}
           </tbody>
         </Table>
-        <EditModal itemId ={this.state.chosenID} itemName={this.state.chosenName} itemType={this.state.chosenTypeName} itemPrice={this.state.chosenPrice}  show={this.state.showModal} onHide={() => this.setState({showModal:false})}/>
+        <EditModal typId={this.state.IDtype} itemId ={this.state.chosenID} itemName={this.state.chosenName} itemType={this.state.chosenTypeName} itemPrice={this.state.chosenPrice}  show={this.state.showModal} onHide={() => this.setState({showModal:false})}/>
       </div>
     ); 
   }
