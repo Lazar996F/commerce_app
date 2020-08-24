@@ -34,7 +34,6 @@ class Items extends Component {
       .then(itemTypes => this.setState({ itemTypes }, () => console.log('Item types fetched..', itemTypes)))
   }
 
-  
   addToCart = (id, name, price) => {
     let { addedCart } = this.state;
     let addedItem = { item_id: id, name: name, price: price };
@@ -105,8 +104,7 @@ class Items extends Component {
               <tr>
                 <td>{index + 1}</td>
                 <td>{item.name}</td>
-                <td>{item.
-                  type_name}</td>
+                <td>{item.type_name}</td>
                 <td>{item.item_price}</td>
                 <td>
                   <Button onClick={() => this.addToCart(item.id, item.name, item.item_price)}>Add to Cart</Button>
@@ -124,7 +122,7 @@ class Items extends Component {
             </tr>
           </thead>
           <tbody>
-            {this.state.addedCart.map((additem, index) => (
+            {this.state.addedCart.map( (additem, index) => (
               <tr>
                 <td>{index + 1}</td>
                 <td>{additem.name}</td>

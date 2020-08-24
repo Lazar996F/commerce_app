@@ -113,10 +113,10 @@ commerce.types = () => {
 };
 
 
+
 commerce.addItem = (name,typeID,price) => {
     return new Promise ((resolve,reject) => {
 
-  
         pool.query(`INSERT INTO items (name,item_type_id,item_price) VALUES (?, ?, ?);`, [name, typeID, price].map((value) => {return value === '' ? null : value}), (error) => {
             if(error){
                 return resolve({status: "faild",
