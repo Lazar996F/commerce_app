@@ -5,6 +5,10 @@ import Bar from './components/navbar96/navbar'
 import Home from './components/home/home'
 import './App.css';
 
+
+
+
+
 class App extends Component {
   
   render() {

@@ -21,7 +21,6 @@ ReactDOM.render(
           <Route path="/add" component={Add}/>
           <Route path="/delete" component={DeleteItem}/>
           <Route path="/edit" component={Edit_item}/>
-
       </Router>
   </React.StrictMode>,
   document.getElementById('root')

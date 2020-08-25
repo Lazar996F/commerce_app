@@ -112,6 +112,10 @@ class Items extends Component {
               </tr>))}
           </tbody>
         </Table>
+
+
+
+        
         <h4 className="mt-5 pl-5 mb-3">CART</h4>
         <Table className="w-50">
           <thead>
