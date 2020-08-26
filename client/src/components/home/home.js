@@ -7,7 +7,8 @@ import 'swiper/swiper.scss';
 import image from '../../default.png';
 import SwipeCore, {Navigation, Pagination} from 'swiper'
 
-
+import {getItems,getTypes,setCart} from "../../store/actions/items";
+import { connect } from "react-redux";
 
 
 
@@ -17,51 +18,50 @@ SwipeCore.use([Navigation,Pagination]);
 class Home extends Component {
 
 
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
     this.state = {
-      items: [],
-      itemTypes:[],
-      addedCart: [],
+ 
     }
   }
 
 
   componentDidMount() {
-    fetch('/api/items')
-      .then(res => res.json())
-      .then(items => this.setState({ items }, () => console.log('Items fetched..', items)))
-      fetch('api/types')
-      .then(res => res.json())
-      .then(itemTypes => this.setState({ itemTypes }, () => console.log('Item types fetched..', itemTypes)))
+      this.props.onGetItems()
+      this.props.onGetTypes()
   }
 
   addToCart = (id, name, price) => {
-    const { addedCart } = this.state;
+    const { addedCart } = this.props;
+    const newCart = addedCart;
+    console.log("homaddToCartecart>",this.props.addedCart)
     let addedItem = { item_id: id, name: name, price: price };
-    addedCart.push(addedItem);
-    this.setState({addedCart});
+    newCart.push(addedItem);
+
+    this.props.onSetCart(newCart);
+
   }
 
-
   render() {
+    const { addedCart } = this.props;
+    console.log("homecart>",addedCart)
 
     return (
       <Container>
-        {this.state.itemTypes.map( type =>(
-          <div>
+        {this.props.itemTypes.map( (type, index) =>(
+          <div key={index}>
             <h1 className="text-center mt-5">{type.type_name}</h1>
           <Swiper className="mt-5"
           spaceBetween={40}
           slidesPerView={3} 
           >
-          {this.state.items.map(item =>(
+          {this.props.items.map((item, index) =>(
             item.item_type_id===type.id &&
-            <SwiperSlide className="card">
+            <SwiperSlide key={index} className="card">
               <Image src={image} fluid thumbnail/>
                   <h2>{item.name}</h2>
                   <p class="price">$ {item.item_price}</p>
-                  <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+                  <p>Lorem ipsum dolor sit amet.</p>
                   <p><button onClick={() => this.addToCart(item.id, item.name, item.item_price)}>Add to Cart</button></p>
             </SwiperSlide>
           ))}
@@ -73,4 +73,18 @@ class Home extends Component {
     }
 }
 
-export default Home;
+
+const mapStateToProps = (state) => ({
+  items: state.items.itemsRedux,
+  itemTypes: state.items.itemTypes,
+  addedCart: state.items.addedToCart,
+});
+
+const mapDispatchToProps = (dispatch) => ({
+  onGetItems: (payload) => dispatch(getItems(payload)),
+  onGetTypes: (payload) => dispatch(getTypes(payload)),
+  onSetCart: (payload) => dispatch(setCart(payload)), 
+});
+
+
+export default connect(mapStateToProps, mapDispatchToProps)(Home);
