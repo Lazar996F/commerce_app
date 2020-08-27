@@ -25,7 +25,6 @@ class App extends Component {
     return (
       <Container fluid>
         <Bar/>
-        <Home/>
       </Container>
     ); 
   }

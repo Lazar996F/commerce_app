@@ -90,6 +90,8 @@ commerce.addSale = (items,newDate) => {
             queryString += `(${item.item_id},'${newDate}'), `
            }
         });
+
+        
         pool.query( queryString, (error,results) => {
             
             if(error){
@@ -100,6 +102,8 @@ commerce.addSale = (items,newDate) => {
         });
     });
 };
+
+
 
 commerce.types = () => {
     return new Promise ((resolve,reject) => {
@@ -127,6 +131,8 @@ commerce.addItem = (name,typeID,price) => {
     });
 };
 
+
+
 commerce.deleteItem = (delID) => {
 
     return new Promise ((resolve,reject)=> {
@@ -139,6 +145,8 @@ commerce.deleteItem = (delID) => {
         });
     });
 };
+
+
 
 commerce.editItem = (name,type,price,id) => {
     
@@ -153,6 +161,7 @@ commerce.editItem = (name,type,price,id) => {
         });
     });
 };
+
 
 
 module.exports = commerce;

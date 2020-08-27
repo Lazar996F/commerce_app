@@ -1,5 +1,5 @@
 import * as actionTypes from "../actionTypes";
-import { postToSold } from "../actions/items";
+
 
 
 
@@ -16,6 +16,7 @@ const updateObject = (oldObject, updatedProperties) => {
         itemTypes:[],
         error: {},
         addedToCart:[],
+        showModal:false
   };
 
 
@@ -31,6 +32,13 @@ const updateObject = (oldObject, updatedProperties) => {
   const setCart = (state, action) => {
     return updateObject(state, { addedToCart: [...action.cart] });
   };
+
+
+
+  const setFlagForCart = (state, action) => {
+    return updateObject(state, {showModal: action.showModal});
+  };
+
 
   const reducer = (state = initialState, action) => {
     switch (action.type) {

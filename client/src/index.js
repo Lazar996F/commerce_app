@@ -10,12 +10,12 @@ import DeleteItem from './components/delete_item/deleteItem'
 import Edit_item from './components/Edit/edit_item'
 import Cart from './components/cart/cart'
 
-
 import { Provider } from 'react-redux'
 import {createStore, applyMiddleware, combineReducers } from 'redux'
 import itemsReducer from './store/reducers/items.js'
 import salesReducer from './store/reducers/sales.js'
 import thunk from 'redux-thunk';
+import Home from './components/home/home'
 
 const rootReducer = combineReducers({
   items: itemsReducer,
@@ -35,6 +35,8 @@ ReactDOM.render(
           <Route path="/delete" component={DeleteItem}/>
           <Route path="/edit" component={Edit_item}/>
           <Route path="/cart" component={Cart}/>
+          <Route path="/home" component={Home}/>
+
           </Provider>
       </Router>
   </React.StrictMode>,
