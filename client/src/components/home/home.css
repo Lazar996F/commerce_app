@@ -1,3 +1,10 @@
+
+body{
+  overflow-x: hidden;
+}
+
+
+
 .card {
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
     max-width: 300px;
@@ -26,3 +33,79 @@
     opacity: 0.7;
   }
 
+
+  .btn-primary {
+    color: #fff;
+    background-color: #343a40!important;
+    border-color: #343a40!important;
+    border-radius:3px!important;
+}
+
+  .btn-primary:focus, .btn-primary.focus {
+    color: #fff;
+    background-color: #343a40!important;
+    border-color: #343a40!important;
+}
+
+.btn-primary:not(:disabled):not(.disabled):active, .btn-primary:not(:disabled):not(.disabled).active, .show > .btn-primary.dropdown-toggle {
+  color: #fff;
+  background-color: #343a40!important;
+  border-color: #343a40!important;
+}
+
+.firstCol-padd {
+    padding-top: 47px;
+}
+
+.fontPrice {
+  font-size: 2em;
+  text-align: right;
+  padding-right: 50px;
+}
+
+.buttonX {
+  background-color: #4CAF50; /* Green */
+  border: none;
+  color: white;
+  padding:5px 20px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  margin: 4px 2px;
+  transition-duration: 0.4s;
+  cursor: pointer;
+}
+
+.button5 {
+  background-color: black;
+  color: white;
+
+}
+
+.button5:hover {
+  background-color: #555555;
+  color: white;
+}
+
+.title-item {
+  font-size: 20px;
+  font-weight: 700;
+}
+
+.number-font{
+  font-size: 18px;
+  font-weight: 500;
+}
+
+.card button {
+  border: none;
+  outline: 0;
+  padding: 5px;
+  color: white;
+  background-color: #000;
+  text-align: center;
+  cursor: pointer;
+  width: 100%;
+  font-size: 16px;
+}

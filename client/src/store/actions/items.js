@@ -1,9 +1,6 @@
 import * as actionTypes from '../actionTypes'
 
 
-
-
-
 // I T E M S
 export const getItemsSuccess = ( items ) => {
   return { items: items, error: {}, type: actionTypes.GET_ITEMS}
@@ -13,6 +10,7 @@ export const getItemsSuccess = ( items ) => {
 export const getItemsFail = ( err ) => {
   return { error: err, items: [],  type: actionTypes.GET_ITEMS}
 }
+
 export const getItems = payload => (dispatch) => {
     fetch('/api/items')
       .then(res => res.json())

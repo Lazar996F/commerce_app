@@ -36,13 +36,12 @@ class Sales extends Component {
   }
 
 
-  setMonth() {
 
+  setMonth() {
     this.setState({isMonth:true, isBS:false, isME:false ,isAll:false})
     fetch(`api/sold/${this.state.selectedMonth}`)
       .then(res => res.json())
       .then(monthNotSold => this.setState({ monthNotSold }, () => console.log('Month not sold items fetched...', monthNotSold)))
-  
   }
 
   render() {

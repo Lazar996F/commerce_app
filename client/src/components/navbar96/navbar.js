@@ -12,7 +12,7 @@ class Bar extends Component {
         return (
             <>
                 <Navbar bg="dark" variant="dark">
-                    <Navbar.Brand as={Link} to="/home">E-commerce</Navbar.Brand>
+                    <Navbar.Brand as={Link} to="/home" className="pl-3">E-commerce</Navbar.Brand>
                     <Navbar.Toggle aria-controls="responsive-navbar-nav" />
                     <Navbar.Collapse id="responsive-navbar-nav">
                         <Nav className="mr-auto">

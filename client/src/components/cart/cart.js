@@ -38,6 +38,8 @@ class Cart extends Component {
   }
 
 
+
+
   async addSale() {
     const { addedCart } = this.props
     const items = addedCart.map(x => {
@@ -98,12 +100,12 @@ class Cart extends Component {
           <h4 className="mt-3">SUBTOTAL({this.props.addedCart.length} Items): $ {this.totalPrice()} </h4>
         </div>
         <span className="">{this.state.message}</span>
-    </Col>) : (<h2 className="pl-5 pt-5">Shopping Cart is empty :(</h2>) }
+    </Col>) : (<h2 className="pl-5 pt-5">Shopping Cart is empty :(</h2>)}
 
 
-    <Col md={4} className="text-center">
-      mozda najprodavanije ovdje prikazati 
-    </Col>
+    {this.props.addedCart.length>0 && <Col md={4} className="text-center pt-5">
+    <button type="button" class="btn btn-secondary">Order</button>
+    </Col>}
     
       </Row>
     );
@@ -113,6 +115,8 @@ class Cart extends Component {
 const mapStateToProps = (state) => ({
   addedCart: state.items.addedToCart
 });
+
+
 
 const mapDispatchToProps = (dispatch) => ({
   onSetCart: (payload) => dispatch(setCart(payload)),

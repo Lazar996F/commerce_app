@@ -19,6 +19,7 @@ class Add extends Component {
           newPrice: 0,
           typeValue: 0,
           typeName: null,
+          base64TextString:''
         }
       }
 
@@ -56,7 +57,47 @@ class Add extends Component {
         }
     }
 
+    onChange =(e) => {
+      console.log("file to upload:", e.target.files[0])
+      let file = e.target.files[0]
+
+      if(file){
+        const reader = new FileReader();
+        reader.onload= this._handleReaderLoaded.bind(this)
+        reader.readAsBinaryString(file)
+      }
+    }
+
+    _handleReaderLoaded = (readerEvt) => {
+      let binaryString= readerEvt.target.result
+      this.setState({
+        base64TextString: btoa(binaryString)
+      })
+    }
+
+    onFileSubmit = (e) => {
+      e.preventDefault()
+      console.log("binary string:", this.state.base64TextString);
+
+      let payload = {image: this.state.base64TextString}
+      fetch(`/api/add/${this.props.items.id}`, {
+        method: "PATCH"
+        headers: {
+          "Accept": "application/json",
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify(payload)
+      })
+
+      .then(resp=> resp.json())
+      .then(json => console.log(json))
+
+      preview.src= "data:image/png;base64"+ this.state.base64TextString
+    }
+
+
     render() {
+
       return (
         <Container fluid className="mb-5 pb-5 mt-5">
         <h2 className="text-center">INSERT NEW ITEM</h2>
@@ -79,8 +120,18 @@ class Add extends Component {
             <Form.Control onChange={(event) => this.setState({ newPrice: event.target.value })} />
           </Form.Group>
         </Form.Row>
+
+        <form onSubmit={(e) => this.onFileSubmit(e)} onChange={(e)=> this.onChange(e)}>
+              <input
+              type="file"
+              name="image"
+              id="file"
+              accept=".jpeg, .png, .jpg"
+              />
+              <input type="submit"/>
+        </form>
+
         <Button onClick={() => this.setNewItem()} variant="primary">Add item</Button>
-    
     
         {this.state.msgItem=='Successfully added a new item :)' && (<Alert variant='success' className="w-25">
             {this.state.msgItem}
@@ -94,4 +145,5 @@ class Add extends Component {
     }
   }
   
+
   export default Add;

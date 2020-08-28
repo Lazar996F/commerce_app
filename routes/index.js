@@ -49,6 +49,9 @@ router.get('/sold/bs', async (req,res) => {
         res.sendStatus(500);
     }
 });
+
+
+
 router.get('/sold/3x', async (req,res) => {
     try{
         let results= await db.mostExpensive();
@@ -126,5 +129,18 @@ router.put('/edit', async (req,res) => {
         res.sendStatus(500);
     }
 });
+
+
+router.post('/upload', async(req,res)=> {
+    try{
+        let upld= await db.(req.body.image, req.body.id)
+
+    }catch(e){
+        res.sendStatus(404);
+    }
+})
+
+
+
 
 module.exports = router;

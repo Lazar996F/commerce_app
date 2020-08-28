@@ -1,19 +1,19 @@
 
 import React, { Component } from 'react';
-import { Container, Row, Col,Image} from 'react-bootstrap'
+import { Row, Col, Image,ListGroup} from 'react-bootstrap'
 import './home.css';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import 'swiper/swiper.scss';
 import image from '../../default.png';
-import SwipeCore, {Navigation, Pagination} from 'swiper'
+import SwipeCore, { Navigation, Pagination } from 'swiper'
 
-import {getItems,getTypes,setCart} from "../../store/actions/items";
+import { getItems, getTypes, setCart } from "../../store/actions/items";
 import { connect } from "react-redux";
 
 
 
 
-SwipeCore.use([Navigation,Pagination]);
+SwipeCore.use([Navigation, Pagination]);
 
 class Home extends Component {
 
@@ -21,56 +21,88 @@ class Home extends Component {
   constructor(props) {
     super(props);
     this.state = {
- 
+      chosenType:0
     }
   }
 
 
   componentDidMount() {
-      this.props.onGetItems()
-      this.props.onGetTypes()
+    this.props.onGetItems()
+    this.props.onGetTypes()
   }
 
   addToCart = (id, name, price) => {
     const { addedCart } = this.props;
     const newCart = addedCart;
-    console.log("homaddToCartecart>",this.props.addedCart)
+    console.log("homaddToCartecart>", this.props.addedCart)
     let addedItem = { item_id: id, name: name, price: price };
     newCart.push(addedItem);
-
     this.props.onSetCart(newCart);
-
   }
 
   render() {
-    const { addedCart } = this.props;
-    console.log("homecart>",addedCart)
-
     return (
-      <Container>
-        {this.props.itemTypes.map( (type, index) =>(
-          <div key={index}>
-            <h1 className="text-center mt-5">{type.type_name}</h1>
-          <Swiper className="mt-5"
-          spaceBetween={40}
-          slidesPerView={3} 
-          >
-          {this.props.items.map((item, index) =>(
-            item.item_type_id===type.id &&
-            <SwiperSlide key={index} className="card">
-              <Image src={image} fluid thumbnail/>
-                  <h2>{item.name}</h2>
-                  <p class="price">$ {item.item_price}</p>
-                  <p>Lorem ipsum dolor sit amet.</p>
-                  <p><button onClick={() => this.addToCart(item.id, item.name, item.item_price)}>Add to Cart</button></p>
-            </SwiperSlide>
+      <Row>
+        <Col md={4} className="firstCol-padd">
+          <h3 className="text-center mb-4">Category</h3>
+          <ListGroup variant="flush" className="text-center">
+          {this.props.itemTypes.map( (type,index) => (
+            <ListGroup.Item action variant="light" key={index} onClick={() => this.setState({chosenType:type.id})}>{type.type_name}</ListGroup.Item>
           ))}
-          </Swiper>
-          </div> 
-        ))}
-      </Container>
-        );
-    }
+          </ListGroup>
+        </Col>
+        <Col md={6}>
+          {this.props.itemTypes.map((type, index) => (
+            <div key={index}>
+
+              {this.state.chosenType===0 && <Swiper className="mt-5"
+                spaceBetween={40}
+                slidesPerView={3}
+              >
+                {this.props.items.map((item, index) => (
+                    item.item_type_id === type.id &&
+                  <SwiperSlide key={index} className="card">
+                    <Image src={image} fluid thumbnail/>
+                    <p className="title-item mt-0 mb-3">{item.name}</p>
+                    <p className="mb-0">Lorem ipsum dolor sit amet.</p>
+                    <p class="number-font">$ {item.item_price}</p>
+                    <button onClick={() => this.addToCart(item.id, item.name, item.item_price)}>Add to Cart</button>
+                  </SwiperSlide>
+                ))}
+              </Swiper>}
+            </div>
+          ))}
+
+        <ListGroup className="pt-5">
+          {this.props.items.map( (item, index) => (
+            item.item_type_id === this.state.chosenType &&
+            <ListGroup.Item key={index} >
+              <Row>
+                <Col md={2}>
+                  <Image src={image} fluid/>
+                </Col>
+                <Col md={5}>
+                  <h2>{item.name}</h2>
+                  <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+                </Col>
+                <Col md={5}>
+                <p>$ {item.item_price}</p>
+                <button className="buttonX button5 mt-5" onClick={() => this.addToCart(item.id, item.name, item.item_price)}>Add to Cart</button>
+                </Col>
+              </Row>
+            </ListGroup.Item>
+          ))}
+        </ListGroup>
+        
+
+        </Col>
+
+        <Col md={2} className="text-center">
+        <button className="buttonX button5 mt-5" onClick={() => this.setState({chosenType:0})}>See all</button>
+        </Col>
+      </Row>
+    );
+  }
 }
 
 
@@ -83,7 +115,7 @@ const mapStateToProps = (state) => ({
 const mapDispatchToProps = (dispatch) => ({
   onGetItems: (payload) => dispatch(getItems(payload)),
   onGetTypes: (payload) => dispatch(getTypes(payload)),
-  onSetCart: (payload) => dispatch(setCart(payload)), 
+  onSetCart: (payload) => dispatch(setCart(payload)),
 });
 
 
