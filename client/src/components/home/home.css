@@ -64,7 +64,6 @@ body{
 }
 
 .buttonX {
-  background-color: #4CAF50; /* Green */
   border: none;
   color: white;
   padding:5px 20px;
@@ -78,15 +77,17 @@ body{
 }
 
 .button5 {
-  background-color: black;
-  color: white;
-
+background-color: white;
+color: black;
+font-size: large;
+border-bottom: 1px solid #dddddf;
 }
 
 .button5:hover {
-  background-color: #555555;
+  background-color: black;
   color: white;
 }
+
 
 .title-item {
   font-size: 20px;
@@ -102,10 +103,36 @@ body{
   border: none;
   outline: 0;
   padding: 5px;
-  color: white;
-  background-color: #000;
+  color: black;
+  background-color: #dddddf;
   text-align: center;
   cursor: pointer;
   width: 100%;
   font-size: 16px;
+}
+
+.form-padding{
+
+  padding-top:96px;
+}
+
+.button5:hover {
+  border-radius: 19px;
+  background-color: #dddddf;
+  color:black;
+}
+
+button:focus {
+  outline: none !important;
+}
+
+.cart-fsize-padd {
+  font-size:28px;
+  text-align:center;
+}
+
+light.list-group-item-action:focus {
+  color: #818182;
+  background-color: #ececf6;
+  border-radius: 19px;
 }

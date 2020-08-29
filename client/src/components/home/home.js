@@ -41,11 +41,12 @@ class Home extends Component {
   }
 
   render() {
+    
     return (
       <Row>
         <Col md={4} className="firstCol-padd">
           <h3 className="text-center mb-4">Category</h3>
-          <ListGroup variant="flush" className="text-center">
+          <ListGroup variant="flush" className="text-center border-0">
           {this.props.itemTypes.map( (type,index) => (
             <ListGroup.Item action variant="light" key={index} onClick={() => this.setState({chosenType:type.id})}>{type.type_name}</ListGroup.Item>
           ))}
@@ -62,31 +63,31 @@ class Home extends Component {
                 {this.props.items.map((item, index) => (
                     item.item_type_id === type.id &&
                   <SwiperSlide key={index} className="card">
-                    <Image src={image} fluid thumbnail/>
+                    <Image src={image} fluid thumbnail />
                     <p className="title-item mt-0 mb-3">{item.name}</p>
                     <p className="mb-0">Lorem ipsum dolor sit amet.</p>
                     <p class="number-font">$ {item.item_price}</p>
-                    <button onClick={() => this.addToCart(item.id, item.name, item.item_price)}>Add to Cart</button>
+                    <button className="buttonX button5" onClick={() => this.addToCart(item.id, item.name, item.item_price)}>Add to Cart</button>
                   </SwiperSlide>
                 ))}
               </Swiper>}
             </div>
           ))}
 
-        <ListGroup className="pt-5">
+        <ListGroup className="form-padding">
           {this.props.items.map( (item, index) => (
             item.item_type_id === this.state.chosenType &&
-            <ListGroup.Item key={index} >
+            <ListGroup.Item key={index} className="border-top-0 border-right-0 border-left-0" >
               <Row>
                 <Col md={2}>
-                  <Image src={image} fluid/>
+                  <Image src={image} fluid className="pt-2"/>
                 </Col>
-                <Col md={5}>
+                <Col md={7}>
                   <h2>{item.name}</h2>
                   <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
                 </Col>
-                <Col md={5}>
-                <p>$ {item.item_price}</p>
+                <Col md={3}>
+                <p className="cart-fsize-padd">$ {item.item_price}</p>
                 <button className="buttonX button5 mt-5" onClick={() => this.addToCart(item.id, item.name, item.item_price)}>Add to Cart</button>
                 </Col>
               </Row>

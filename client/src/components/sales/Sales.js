@@ -14,14 +14,14 @@ class Sales extends Component {
       sold: [],
       bestSeller: [],
       mostExpensive: [],
-      monthNotSold:[],
+      monthNotSold: [],
       isAll: false,
       isBS: false,
       isME: false,
-      isMonth:false,
-      selectedMonth:0
+      isMonth: false,
+      selectedMonth: 0
     }
-  }  
+  }
 
   componentDidMount() {
     fetch('api/sold')
@@ -38,7 +38,7 @@ class Sales extends Component {
 
 
   setMonth() {
-    this.setState({isMonth:true, isBS:false, isME:false ,isAll:false})
+    this.setState({ isMonth: true, isBS: false, isME: false, isAll: false })
     fetch(`api/sold/${this.state.selectedMonth}`)
       .then(res => res.json())
       .then(monthNotSold => this.setState({ monthNotSold }, () => console.log('Month not sold items fetched...', monthNotSold)))
@@ -47,12 +47,12 @@ class Sales extends Component {
   render() {
 
     return (
-      <div>
-        <Button onClick={() => this.setState({ isBS:false, isME:false ,isAll:true})} variant="info" size="lg" className="main-btn">
+      <Container>
+        {/* <Button onClick={() => this.setState({ isBS:false, isME:false ,isAll:true})} variant="info" size="lg" className="main-btn">
           List of sales records
-        </Button>
-
-        <Container className="mb-5">
+        </Button> */}
+        
+        {/* <Container className="mb-5">
           <Row>
             <Col><Button onClick={() => this.setState({ isBS: true, isME: false,isAll:false,isMonth:false})} variant="info">Bestseller</Button></Col>
             <Col><Button onClick={() => this.setState({ isME: true, isBS: false,isAll:false,isMonth:false })} variant="info">The most expensive, sold 3 or more times</Button></Col>
@@ -76,10 +76,24 @@ class Sales extends Component {
               
             </Dropdown>
           </Row>
-        </Container>
+        </Container> */}
 
         {/* ALL SOLD items */}
-        {this.state.isAll && (<Table striped bordered>
+
+        <Row className="p-5 text-center">
+          <Col md={4}>
+            <Button variant="outline-dark" className="butt">See all</Button>
+          </Col>
+          <Col md={4}>
+            <Button variant="outline-dark" className="butt">Bestseller</Button>
+          </Col>
+          <Col md={4}>
+            <Button variant="outline-dark" className="butt">the most expensive</Button>
+          </Col>
+        </Row>
+
+      
+        <Table striped bordered>
           <thead>
             <tr>
               <th>#</th>
@@ -95,14 +109,17 @@ class Sales extends Component {
                 <td>{index + 1}</td>
                 <td>{sold.name}</td>
                 <td>{sold.type_name}</td>
-                <td>{sold.item_price}</td>
+                <td>$ {sold.item_price}</td>
                 <td>{moment(sold.date_sold).format('MMMM Do YYYY')}</td>
               </tr>))}
           </tbody>
-        </Table>)}
+        </Table>
+     
 
-      
-        {/* BESTSELLER */}
+
+
+
+        {/* BESTSELLER
         {this.state.isBS && (<Table striped bordered hover>
           <thead>
             <tr>
@@ -121,9 +138,9 @@ class Sales extends Component {
                 <td>{bs.bs}</td>
               </tr>))}
           </tbody>
-        </Table>)}
+        </Table>)} */}
 
-        {/* MOST EXPENSIVE solde 3>x */}
+        {/* MOST EXPENSIVE solde 3>x
         {this.state.isME && (<Table striped bordered hover>
           <thead>
             <tr>
@@ -142,9 +159,9 @@ class Sales extends Component {
                 <td>{mostEx.number}</td>
               </tr>))}
           </tbody>
-        </Table>)}
+        </Table>)} */}
 
-        {/* items not sold in x month  */}
+        {/* items not sold in x month 
         {this.state.isMonth && (<Table striped bordered hover>
           <thead>
             <tr>
@@ -159,9 +176,9 @@ class Sales extends Component {
                 <td>{mNs.name}</td>
               </tr>))}
           </tbody>
-        </Table>)}
+        </Table>)} */}
 
-      </div>
+</Container>
     );
   }
 }

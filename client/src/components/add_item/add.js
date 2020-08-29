@@ -23,6 +23,8 @@ class Add extends Component {
         }
       }
 
+
+
       componentDidMount () {
         fetch('api/types')
         .then(res => res.json())
@@ -39,10 +41,10 @@ class Add extends Component {
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ name: this.state.typeName, item_type_id: this.state.typeValue, price: this.state.newPrice  })
         };
+
         const response = await fetch('/api/new/item', requestOptions);
         const data = await response.json();
         
-        console.log('objekat',data, this.state.newPrice )
         if (data.status == 'success') {
           this.setState({ msgItem: 'Successfully added a new item :)' }, () => {
             setTimeout(() => {
@@ -57,43 +59,43 @@ class Add extends Component {
         }
     }
 
-    onChange =(e) => {
-      console.log("file to upload:", e.target.files[0])
-      let file = e.target.files[0]
+    // onChange =(e) => {
+    //   console.log("file to upload:", e.target.files[0])
+    //   let file = e.target.files[0]
 
-      if(file){
-        const reader = new FileReader();
-        reader.onload= this._handleReaderLoaded.bind(this)
-        reader.readAsBinaryString(file)
-      }
-    }
+    //   if(file){
+    //     const reader = new FileReader();
+    //     reader.onload= this._handleReaderLoaded.bind(this)
+    //     reader.readAsBinaryString(file)
+    //   }
+    // }
 
-    _handleReaderLoaded = (readerEvt) => {
-      let binaryString= readerEvt.target.result
-      this.setState({
-        base64TextString: btoa(binaryString)
-      })
-    }
+    // _handleReaderLoaded = (readerEvt) => {
+    //   let binaryString= readerEvt.target.result
+    //   this.setState({
+    //     base64TextString: btoa(binaryString)
+    //   })
+    //}
 
-    onFileSubmit = (e) => {
-      e.preventDefault()
-      console.log("binary string:", this.state.base64TextString);
+    // onFileSubmit = (e) => {
+    //   e.preventDefault()
+    //   console.log("binary string:", this.state.base64TextString);
 
-      let payload = {image: this.state.base64TextString}
-      fetch(`/api/add/${this.props.items.id}`, {
-        method: "PATCH"
-        headers: {
-          "Accept": "application/json",
-          "Content-Type": "application/json"
-        },
-        body: JSON.stringify(payload)
-      })
+    //   let payload = {image: this.state.base64TextString}
+    //   fetch(`/api/add/${this.props.items.id}`, {
+    //     method: "PATCH"
+    //     headers: {
+    //       "Accept": "application/json",
+    //       "Content-Type": "application/json"
+    //     },
+    //     body: JSON.stringify(payload)
+    //   })
 
-      .then(resp=> resp.json())
-      .then(json => console.log(json))
+    //   .then(resp=> resp.json())
+    //   .then(json => console.log(json))
 
-      preview.src= "data:image/png;base64"+ this.state.base64TextString
-    }
+    //   preview.src= "data:image/png;base64"+ this.state.base64TextString
+    // }
 
 
     render() {

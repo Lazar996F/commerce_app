@@ -131,14 +131,14 @@ router.put('/edit', async (req,res) => {
 });
 
 
-router.post('/upload', async(req,res)=> {
-    try{
-        let upld= await db.(req.body.image, req.body.id)
+// router.post('/upload', async(req,res)=> {
+//     try{
+//         let upld= await db.(req.body.image, req.body.id)
 
-    }catch(e){
-        res.sendStatus(404);
-    }
-})
+//     }catch(e){
+//         res.sendStatus(404);
+//     }
+// })
 
 
 

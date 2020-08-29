@@ -16,8 +16,9 @@ class Bar extends Component {
                     <Navbar.Toggle aria-controls="responsive-navbar-nav" />
                     <Navbar.Collapse id="responsive-navbar-nav">
                         <Nav className="mr-auto">
-                            <Nav.Link as={Link} to="/items">Shop</Nav.Link>
+                            <Nav.Link as={Link} to="/sales" className="pl-5">Sales</Nav.Link>
                         </Nav>
+
                         <Nav>
                             <Nav.Link as={Link} to="/cart">
                                 <Button className="bg-dark border-0">
@@ -28,6 +29,7 @@ class Bar extends Component {
                                 </Button>
                             </Nav.Link>
                         </Nav>
+                       
                     </Navbar.Collapse>
                 </Navbar>
 
