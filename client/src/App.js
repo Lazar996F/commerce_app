@@ -4,7 +4,6 @@ import {Container } from 'react-bootstrap'
 import Bar from './components/navbar96/navbar'
 import Home from './components/home/home'
 import './App.css';
-import { Provider } from 'react-redux'
 import {createStore, applyMiddleware, combineReducers } from 'redux'
 import itemsReducer from './store/reducers/items.js'
 import salesReducer from './store/reducers/sales.js'

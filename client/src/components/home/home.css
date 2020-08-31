@@ -146,3 +146,8 @@ light.list-group-item-action:focus {
   height: auto;
   height: 250px!important;
 }
+
+.swiper-button-prev, .swiper-button-next {
+
+  color: #b5b6b7!important;
+}

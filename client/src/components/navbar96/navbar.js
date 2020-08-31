@@ -8,6 +8,10 @@ import { connect } from 'react-redux';
 
 class Bar extends Component {
 
+  refreshPage = ()=> {
+      if(window.location.pathname==='/')
+        window.location.reload(false);
+      }
 
     render() {
 
@@ -15,7 +19,7 @@ class Bar extends Component {
         return (
             <>
                 <Navbar bg="dark" variant="dark">
-                    <Navbar.Brand as={Link} to="/" className="pl-3" >E-commerce</Navbar.Brand>
+                    <Navbar.Brand as={Link} to="/" className="pl-3" button onClick={()=> this.refreshPage()}>E-commerce</Navbar.Brand>
                     <Navbar.Toggle aria-controls="responsive-navbar-nav" />
                     <Navbar.Collapse id="responsive-navbar-nav">
                         <Nav className="mr-auto">
@@ -39,7 +43,6 @@ class Bar extends Component {
                                 </Button>
                             </Nav.Link>
                         </Nav>
-                       
                     </Navbar.Collapse>
                 </Navbar>
 

@@ -4,6 +4,7 @@ import { Row, Col, Image,ListGroup} from 'react-bootstrap'
 import './home.css';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import 'swiper/swiper.scss';
+import 'swiper/swiper-bundle.css';
 import image from '../../default.png';
 import SwipeCore, { Navigation, Pagination } from 'swiper'
 
@@ -61,6 +62,8 @@ class Home extends Component {
               {this.state.chosenType===0 && <Swiper className="mt-5"
                 spaceBetween={40}
                 slidesPerView={3}
+                navigation
+                loop
               >
                 {this.props.items.map((item, index) => (
                     item.item_type_id === type.id &&

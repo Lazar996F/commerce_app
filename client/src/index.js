@@ -31,11 +31,13 @@ ReactDOM.render(
       <Router>
       <Provider store={store}>
         <App />
+            <Route path="/" exact component={Home}/>
           <Route path="/sales" component={Sales} />
           <Route path="/add/items" component={Add}/>
           <Route path="/edit/items" component={Edit_item}/>
           <Route path="/cart" component={Cart}/>
-          <Route path="/" component={Home}/>
+          
+
 
           </Provider>
       </Router>
