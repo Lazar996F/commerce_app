@@ -1,6 +1,6 @@
 
 import React, { Component } from 'react';
-import {Row,Col, Button, Image, ListGroup,Badge,Form,Container } from 'react-bootstrap'
+import {Row,Col, Button, Image, ListGroup,Badge,Form,Container,Alert } from 'react-bootstrap'
 import './cart.css';
 import { connect } from 'react-redux';
 import { setCart } from "../../store/actions/items";
@@ -15,6 +15,7 @@ class Cart extends Component {
     super(props);
     this.state = {
         message:'',
+        isSuccess:false
     }
   }
 
@@ -57,13 +58,13 @@ class Cart extends Component {
     const data = await response.json();
 
     if (data.status == 'success') {
-      this.setState({ addedCart: [], message: 'Successfully' }, () => {
+      this.setState({ addedCart: [], message: 'Successfully added item',isSuccess:true}, () => {
         setTimeout(() => {
           this.setState({ message: '' })
         }, 5000);
       })
     } else if (data.status == 'faild') {
-      this.setState({ addedCart: [], message: 'Faild to add' })
+      this.setState({ addedCart: [], message: 'Faild to add',isSuccess:false })
     }
     this.props.onSetCart([]);
   };
@@ -125,10 +126,17 @@ class Cart extends Component {
 <button type="button" className="btn btn-secondary mb-5" onClick={()=> this.addSale()}>Order</button>
     </Col>}
       </Row>
+      {this.state.isSuccess && <Alert variant='success' className="w-25">
+    {this.state.message}
+  </Alert>}
+  {!this.state.isSuccess && this.props.addedCart.lenght>0 && <Alert variant='danger' className="w-25">
+    {this.state.message}
+  </Alert>}
       </Container>
     );
   }
 }
+
 
 const mapStateToProps = (state) => ({
   addedCart: state.items.addedToCart

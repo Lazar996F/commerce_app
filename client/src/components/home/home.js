@@ -90,7 +90,7 @@ class Home extends Component {
                 </Col>
                 <Col md={3}>
                 <p className="cart-fsize-padd">$ {item.item_price}</p>
-                <button className="buttonX button5 mt-5" onClick={() => this.addToCart(item.id, item.name, item.item_price)}>Add to Cart</button>
+                <button className="buttonX button5 mt-5  ml-5" onClick={() => this.addToCart(item.id, item.name, item.item_price)}>Add to Cart</button>
                 </Col>
               </Row>
             </ListGroup.Item>

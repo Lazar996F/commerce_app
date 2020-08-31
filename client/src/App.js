@@ -8,7 +8,6 @@ import { Provider } from 'react-redux'
 import {createStore, applyMiddleware, combineReducers } from 'redux'
 import itemsReducer from './store/reducers/items.js'
 import salesReducer from './store/reducers/sales.js'
-
 import thunk from 'redux-thunk';
 
 const rootReducer = combineReducers({

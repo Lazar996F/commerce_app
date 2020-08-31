@@ -35,7 +35,7 @@ ReactDOM.render(
           <Route path="/add/items" component={Add}/>
           <Route path="/edit/items" component={Edit_item}/>
           <Route path="/cart" component={Cart}/>
-          <Route path="/home" component={Home}/>
+          <Route path="/" component={Home}/>
 
           </Provider>
       </Router>
