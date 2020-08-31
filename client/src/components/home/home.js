@@ -31,11 +31,13 @@ class Home extends Component {
     this.props.onGetTypes()
   }
 
-  addToCart = (id, name, price) => {
+
+  
+  addToCart = (id, name, price,picture) => {
     const { addedCart } = this.props;
     const newCart = addedCart;
     console.log("homaddToCartecart>", this.props.addedCart)
-    let addedItem = { item_id: id, name: name, price: price };
+    let addedItem = { item_id: id, name: name, price: price,picture:picture };
     newCart.push(addedItem);
     this.props.onSetCart(newCart);
   }
@@ -63,11 +65,11 @@ class Home extends Component {
                 {this.props.items.map((item, index) => (
                     item.item_type_id === type.id &&
                   <SwiperSlide key={index} className="card">
-                    <Image src={image} fluid thumbnail />
+                    <Image src={item.picture} fluid thumbnail />
                     <p className="title-item mt-0 mb-3">{item.name}</p>
                     <p className="mb-0">Lorem ipsum dolor sit amet.</p>
                     <p class="number-font">$ {item.item_price}</p>
-                    <button className="buttonX button5" onClick={() => this.addToCart(item.id, item.name, item.item_price)}>Add to Cart</button>
+                    <button className="buttonX button5" onClick={() => this.addToCart(item.id, item.name, item.item_price,item.picture)}>Add to Cart</button>
                   </SwiperSlide>
                 ))}
               </Swiper>}
@@ -80,10 +82,10 @@ class Home extends Component {
             <ListGroup.Item key={index} className="border-top-0 border-right-0 border-left-0" >
               <Row>
                 <Col md={2}>
-                  <Image src={image} fluid className="pt-2"/>
+                  <Image src={item.picture} fluid className="pt-2"/>
                 </Col>
                 <Col md={7}>
-                  <h2>{item.name}</h2>
+                  <h3>{item.name}</h3>
                   <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
                 </Col>
                 <Col md={3}>

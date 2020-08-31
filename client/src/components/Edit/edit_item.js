@@ -23,7 +23,9 @@ class Edit_item extends Component {
           chosenPrice:0,
           chosenID:0,
           chosenTypeName:'',
-          IDtype:0
+          IDtype:0,
+          msgDelete:'',
+          msgDelete:''
         }
       }
 
@@ -33,10 +35,35 @@ class Edit_item extends Component {
           .then(items => this.setState({ items }, () => console.log('Items fetched..', items)))
       }
 
+      async deleteItem(deleteID,index) {
+
+  
+        const requestOptions = {
+            method: 'DELETE',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ id: deleteID })
+        };
+      
+        const response = await fetch('/api/delete', requestOptions);
+        const data = await response.json();
+      
+
+        if (data.status == 'success') {
+          this.setState({ msgDelete: 'Successfully deleted item :)' }, () => {
+            setTimeout(() => {
+              this.setState({ msgDelete: ''})
+            }, 1000);
+          })
+      
+        } else if (data.status == 'faild') {
+          this.setState({ msgDelete: 'Faild to delete item :('})
+        }
+        this.state.items.splice(index,1);
+      }
+
   render() {
 
     return (
-
         <div>
         <h2 className="text-center mt-5 pt-5 mb-5">ALL ITEMS FOR SALE</h2>
         <Table striped bordered>
@@ -57,10 +84,16 @@ class Edit_item extends Component {
                 <td>{item.type_name}</td>
                 <td>{item.item_price}</td>
                 <td>
-                  <Button onClick={()=> this.setState({showModal:true,chosenID:item.id,IDtype:item.item_type_id,chosenName:item.name,chosenPrice:item.item_price,chosenTypeName:item.type_name})}>Edit</Button>
+                  <Button onClick={()=> this.setState({showModal:true,chosenID:item.id,IDtype:item.item_type_id,chosenName:item.name,chosenPrice:item.item_price,chosenTypeName:item.type_name})} className="mr-5" variant="outline-info">Edit</Button>
+                  <Button variant="outline-danger" onClick={() => { this.deleteItem(item.id,index)}} >Delete</Button>
                 </td>
               </tr>))}
           </tbody>
+          {this.state.msgDelete==='Successfully deleted item :)' && (<Alert variant='success' className="w-50">
+           {this.state.msgDelete}        </Alert>)}
+           {this.state.msgDelete==='Faild to delete item :(' && (<Alert variant='danger' className="w-50">
+         {this.state.msgDelete}
+         </Alert>)}
         </Table>
         <EditModal typId={this.state.IDtype} itemId ={this.state.chosenID} itemName={this.state.chosenName} itemType={this.state.chosenTypeName} itemPrice={this.state.chosenPrice}  show={this.state.showModal} onHide={() => this.setState({showModal:false})}/>
       </div>

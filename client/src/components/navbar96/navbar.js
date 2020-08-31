@@ -18,6 +18,13 @@ class Bar extends Component {
                         <Nav className="mr-auto">
                             <Nav.Link as={Link} to="/sales" className="pl-5">Sales</Nav.Link>
                         </Nav>
+                        <Nav className="mr-auto">
+                            <Nav.Link as={Link} to="/add/items" className="pl-5">Add Item</Nav.Link>
+                        </Nav>
+                        <Nav className="mr-auto">
+                            <Nav.Link as={Link} to="/edit/items" className="pl-5">Edit Item</Nav.Link>
+                        </Nav>
+
 
                         <Nav>
                             <Nav.Link as={Link} to="/cart">

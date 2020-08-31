@@ -1,4 +1,5 @@
 const mysql = require('mysql');
+var bcrypt = require('bcryptjs');
 
 
 const pool = mysql.createPool ({
@@ -17,7 +18,7 @@ commerce.allItems = () => {
 
     return new Promise ((resolve,reject) => {
 
-        pool.query(`SELECT i.id, i.name, i.item_price,i.item_type_id, it.type_name FROM items AS i INNER JOIN items_type AS it ON i.item_type_id = it.id WHERE is_deleted=0`, (error,results) => {
+        pool.query(`SELECT i.id, i.name, i.item_price,i.picture, i.item_type_id, it.type_name FROM items AS i INNER JOIN items_type AS it ON i.item_type_id = it.id WHERE is_deleted=0`, (error,results) => {
             if(error){
                 reject(error);
             }
@@ -118,10 +119,10 @@ commerce.types = () => {
 
 
 
-commerce.addItem = (name,typeID,price) => {
+commerce.addItem = (name,typeID,price,picture) => {
     return new Promise ((resolve,reject) => {
 
-        pool.query(`INSERT INTO items (name,item_type_id,item_price) VALUES (?, ?, ?);`, [name, typeID, price].map((value) => {return value === '' ? null : value}), (error) => {
+        pool.query(`INSERT INTO items (name,item_type_id,item_price,picture) VALUES (?, ?, ?,?);`, [name, typeID, price,picture].map((value) => {return value === '' ? null : value}), (error) => {
             if(error){
                 return resolve({status: "faild",
                     error: error});
@@ -162,6 +163,43 @@ commerce.editItem = (name,type,price,id) => {
     });
 };
 
+
+commerce.addNewUser = (name,password) => {
+    return new Promise ((resolve,reject) => {
+        const role="user"
+        pool.query(`INSERT INTO user (name,password,role) VALUES (?, ?, ?);`, [name,password, role], (error) => {
+            if(error){
+                return resolve({status: "faild",
+                    error: error});
+            }
+                return resolve({ status: "success"});
+        });
+    });
+}
+
+commerce.loginUser = (name, password) => {
+    return new Promise ((resolve,reject) => {
+        if (name === null) {
+            return resolve({status: "faild",
+            error: "Username invalid!"});
+          }
+          pool.query(`SELECT password FROM user WHERE name=?`,[name], (error, results) => {
+
+            if(error){
+                return resolve({status: "faild", error:error});
+            }
+            // results.json()
+            var string=JSON.stringify(results);
+            var tempRes =  JSON.parse(string);
+            console.log('tempRes', tempRes)
+            if(password!==tempRes[0].password){
+                return resolve({status: "faild", error:"Invalid password!"});
+            }
+            return resolve({ status: "success"});
+        });
+
+})
+}
 
 
 module.exports = commerce;

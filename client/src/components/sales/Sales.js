@@ -82,18 +82,18 @@ class Sales extends Component {
 
         <Row className="p-5 text-center">
           <Col md={4}>
-            <Button variant="outline-dark" className="butt">See all</Button>
+            <Button variant="outline-dark" className="butt" onClick={() => this.setState({ isBS:false, isME:false ,isAll:true})}>See all</Button>
           </Col>
           <Col md={4}>
-            <Button variant="outline-dark" className="butt">Bestseller</Button>
+            <Button variant="outline-dark" className="butt" onClick={() => this.setState({ isBS: true, isME: false,isAll:false,isMonth:false})}>Bestseller</Button>
           </Col>
           <Col md={4}>
-            <Button variant="outline-dark" className="butt">the most expensive</Button>
+            <Button variant="outline-dark" className="butt" onClick={() => this.setState({ isME: true, isBS: false,isAll:false,isMonth:false })}>the most expensive</Button>
           </Col>
         </Row>
 
       
-        <Table striped bordered>
+        {this.state.isAll && <Table striped bordered>
           <thead>
             <tr>
               <th>#</th>
@@ -113,13 +113,13 @@ class Sales extends Component {
                 <td>{moment(sold.date_sold).format('MMMM Do YYYY')}</td>
               </tr>))}
           </tbody>
-        </Table>
+        </Table>}
      
 
 
 
 
-        {/* BESTSELLER
+    
         {this.state.isBS && (<Table striped bordered hover>
           <thead>
             <tr>
@@ -138,9 +138,9 @@ class Sales extends Component {
                 <td>{bs.bs}</td>
               </tr>))}
           </tbody>
-        </Table>)} */}
+        </Table>)}
 
-        {/* MOST EXPENSIVE solde 3>x
+    
         {this.state.isME && (<Table striped bordered hover>
           <thead>
             <tr>
@@ -159,7 +159,7 @@ class Sales extends Component {
                 <td>{mostEx.number}</td>
               </tr>))}
           </tbody>
-        </Table>)} */}
+        </Table>)}
 
         {/* items not sold in x month 
         {this.state.isMonth && (<Table striped bordered hover>

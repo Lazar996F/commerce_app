@@ -1,8 +1,41 @@
 const express = require('express');
 const db = require('../db');
+var cookieParser = require('cookie-parser');
+var bodyParser = require('body-parser');
+const jwt = require('jsonwebtoken');
+const exjwt = require('express-jwt');
+
 
 const router = express.Router();
+  
+  router.post('/signup', async (req, res) => {
+    console.log('req.body', req.body.name)
+    try{
 
+        let result = await db.addNewUser(req.body.name,req.body.password)
+        res.json(result);
+         
+    }catch(e) {
+        console.log(e);
+        res.sendStatus(500);
+    }
+  })
+
+  router.post('/log-in', async (req, res) => {
+    const { name, password } = req.body;
+    console.log("User submitted: ", name, password);
+  
+    try{ 
+        const result = await db.loginUser(name, password)
+        res.json(result);
+         
+    }catch(e) {
+        console.log(e);
+        res.sendStatus(500);
+    }
+  });
+
+  
 // LISTA SVIH ITEMA
 router.get('/items', async (req,res) => {
 
@@ -97,7 +130,7 @@ router.get('/types/:typeX', async (req,res) => {
 router.post('/new/item', async (req,res) => {
     try{
 
-            let add = await db.addItem(req.body.name,req.body.item_type_id, req.body.price);
+            let add = await db.addItem(req.body.name,req.body.item_type_id, req.body.price,req.body.picture);
             res.json(add);   
     
        
@@ -129,16 +162,6 @@ router.put('/edit', async (req,res) => {
         res.sendStatus(500);
     }
 });
-
-
-// router.post('/upload', async(req,res)=> {
-//     try{
-//         let upld= await db.(req.body.image, req.body.id)
-
-//     }catch(e){
-//         res.sendStatus(404);
-//     }
-// })
 
 
 

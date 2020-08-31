@@ -1,11 +1,12 @@
 
 import React, { Component } from 'react';
-import {Row,Col, Button, Image, ListGroup,Badge } from 'react-bootstrap'
+import {Row,Col, Button, Image, ListGroup,Badge,Form,Container } from 'react-bootstrap'
 import './cart.css';
 import { connect } from 'react-redux';
 import { setCart } from "../../store/actions/items";
 import image from '../../default.png';
-
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 
 class Cart extends Component {
@@ -72,6 +73,7 @@ class Cart extends Component {
   render() {
 
     return (
+      <Container fluid>
   <Row>
     {this.props.addedCart.length>0 ? (<Col md={8}>
     <ListGroup className="padd-custom">
@@ -80,10 +82,10 @@ class Cart extends Component {
             <ListGroup.Item key={index}>
               <Row>
                 <Col md={2}>
-                  <Image src={image} fluid/>
+                  <Image src={additem.picture} fluid/>
                 </Col>
                 <Col md={5}>
-                  <h2>{additem.name}</h2>
+                  <h3>{additem.name}</h3>
                   <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
                 </Col>
                 <Col md={5}>
@@ -96,18 +98,34 @@ class Cart extends Component {
             </ListGroup.Item>
           ))}
         </ListGroup>
-        <div class="d-flex justify-content-end pr-3">
-          <h4 className="mt-3">SUBTOTAL({this.props.addedCart.length} Items): $ {this.totalPrice()} </h4>
-        </div>
+        
         <span className="">{this.state.message}</span>
     </Col>) : (<h2 className="pl-5 pt-5">Shopping Cart is empty :(</h2>)}
-
-
     {this.props.addedCart.length>0 && <Col md={4} className="text-center pt-5">
-    <button type="button" class="btn btn-secondary">Order</button>
-    </Col>}
+          <h4 className="mt-2 mb-5">SUBTOTAL({this.props.addedCart.length} Items): $ {this.totalPrice()} </h4>
     
+    <Form>
+  <Form.Group controlId="exampleForm.ControlInput1">
+    <Form.Label>Your Name</Form.Label>
+    <Form.Control type="name" placeholder="your name" />
+  </Form.Group>
+  <Form.Group controlId="exampleForm.ControlSelect1">
+    <Form.Label>Adress</Form.Label>
+    <Form.Control type="adress" placeholder="adress" />
+  </Form.Group>
+  <Form.Group controlId="exampleForm.ControlSelect2">
+    <Form.Label>Number</Form.Label>
+    <Form.Control type="number" placeholder="phone number" />
+  </Form.Group>
+  <Form.Group controlId="exampleForm.ControlTextarea1">
+    <Form.Label>Notes</Form.Label>
+    <Form.Control as="textarea" rows="3" />
+  </Form.Group>
+</Form>
+<button type="button" className="btn btn-secondary mb-5" onClick={()=> this.addSale()}>Order</button>
+    </Col>}
       </Row>
+      </Container>
     );
   }
 }

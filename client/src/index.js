@@ -22,6 +22,7 @@ const rootReducer = combineReducers({
   sales: salesReducer
 });
 
+
 const store = createStore(rootReducer, applyMiddleware(thunk))
 
 
@@ -31,9 +32,8 @@ ReactDOM.render(
       <Provider store={store}>
         <App />
           <Route path="/sales" component={Sales} />
-          <Route path="/add" component={Add}/>
-          <Route path="/delete" component={DeleteItem}/>
-          <Route path="/edit" component={Edit_item}/>
+          <Route path="/add/items" component={Add}/>
+          <Route path="/edit/items" component={Edit_item}/>
           <Route path="/cart" component={Cart}/>
           <Route path="/home" component={Home}/>
 

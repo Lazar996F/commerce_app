@@ -1,11 +1,3 @@
-
-import React, { Component } from 'react';
-import {Container } from 'react-bootstrap'
-import Bar from './components/navbar96/navbar'
-import Home from './components/home/home'
-import './App.css';
-import { Provider } from 'react-redux'
-import {createStore, applyMiddleware, combineReducers } from 'redux'
 import itemsReducer from './store/reducers/items.js'
 import salesReducer from './store/reducers/sales.js'
 
@@ -19,7 +11,7 @@ const rootReducer = combineReducers({
 const store = createStore(rootReducer, applyMiddleware(thunk))
 
 
-class App extends Component {
+class Footer extends Component {
 
 
   render() {
@@ -32,4 +24,4 @@ class App extends Component {
   }
 }
 
-export default App;
+export default Footer;

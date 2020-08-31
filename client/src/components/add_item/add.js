@@ -3,7 +3,8 @@ import React, { Component } from 'react';
 import './add.css';
 import 'bootstrap/dist/css/bootstrap.css';
 import { Table, Button, Form, Row, Col, Container,Alert } from 'react-bootstrap'
-
+import { getTypes} from "../../store/actions/items";
+import { connect } from "react-redux";
 
 
 
@@ -14,32 +15,38 @@ class Add extends Component {
         this.state = {
           items: [],
           addSale: [],
-          itemTypes: [],
+          itemTypes:[],
           msgItem:'',
           newPrice: 0,
           typeValue: 0,
           typeName: null,
-          base64TextString:''
+          base64TextString:'',
+          image:{}
         }
       }
 
 
-
-      componentDidMount () {
-        fetch('api/types')
-        .then(res => res.json())
-        .then(itemTypes => {
-          this.setState({ itemTypes });
-          this.setState({ typeValue: itemTypes[0].id });
-        })
+      componentDidMount() {
+            this.props.onGetTypes()
       }
+    
+
       
-    async setNewItem() {
+      
+    async setNewItem(e) {
+      
+let tempValue=this.props.itemTypes[0].id
+      if(this.state.typeValue!==0){
+          tempValue=this.state.typeValue
+      }
+
+      e.preventDefault()
+      const imageString=`data:${this.state.image.type};base64,${this.state.base64TextString}`
 
         const requestOptions = {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ name: this.state.typeName, item_type_id: this.state.typeValue, price: this.state.newPrice  })
+            body: JSON.stringify({ name: this.state.typeName, item_type_id: tempValue, price: this.state.newPrice,picture:imageString })
         };
 
         const response = await fetch('/api/new/item', requestOptions);
@@ -59,47 +66,27 @@ class Add extends Component {
         }
     }
 
-    // onChange =(e) => {
-    //   console.log("file to upload:", e.target.files[0])
-    //   let file = e.target.files[0]
+    onChange =(e) => {
+      console.log("file to upload:", e.target.files[0].id)
+      let file = e.target.files[0]
+this.setState({image:file})
+      if(file){
+        const reader = new FileReader();
+        reader.onload= this._handleReaderLoaded.bind(this)
+        reader.readAsBinaryString(file)
+      }
+    }
 
-    //   if(file){
-    //     const reader = new FileReader();
-    //     reader.onload= this._handleReaderLoaded.bind(this)
-    //     reader.readAsBinaryString(file)
-    //   }
-    // }
+    _handleReaderLoaded = (readerEvt) => {
+      let binaryString= readerEvt.target.result
+      this.setState({
+        base64TextString: btoa(binaryString)
+      })
+    }
 
-    // _handleReaderLoaded = (readerEvt) => {
-    //   let binaryString= readerEvt.target.result
-    //   this.setState({
-    //     base64TextString: btoa(binaryString)
-    //   })
-    //}
-
-    // onFileSubmit = (e) => {
-    //   e.preventDefault()
-    //   console.log("binary string:", this.state.base64TextString);
-
-    //   let payload = {image: this.state.base64TextString}
-    //   fetch(`/api/add/${this.props.items.id}`, {
-    //     method: "PATCH"
-    //     headers: {
-    //       "Accept": "application/json",
-    //       "Content-Type": "application/json"
-    //     },
-    //     body: JSON.stringify(payload)
-    //   })
-
-    //   .then(resp=> resp.json())
-    //   .then(json => console.log(json))
-
-    //   preview.src= "data:image/png;base64"+ this.state.base64TextString
-    // }
-
+   
 
     render() {
-
       return (
         <Container fluid className="mb-5 pb-5 mt-5">
         <h2 className="text-center">INSERT NEW ITEM</h2>
@@ -112,29 +99,27 @@ class Add extends Component {
           <Form.Group as={Col} controlId="formGridState">
             <Form.Label>Type</Form.Label>
             <Form.Control as="select"  onChange={(e) => this.setState({ typeValue: e.target.value})}>
-              {this.state.itemTypes.map((type, index) => (
+              {this.props.itemTypes.map((type, index) => (
                 <option value={type.id} key={index}>{type.type_name}</option>
               ))}
             </Form.Control>
           </Form.Group>
           <Form.Group as={Col}  controlId="formGridZip">
             <Form.Label>Price [ $ ]</Form.Label>
-            <Form.Control onChange={(event) => this.setState({ newPrice: event.target.value })} />
+            <Form.Control onChange={(event) => this.setState({ newPrice: event.target.value })}  className="w-25"/>
           </Form.Group>
         </Form.Row>
 
-        <form onSubmit={(e) => this.onFileSubmit(e)} onChange={(e)=> this.onChange(e)}>
+        <form onSubmit={(e) => this.setNewItem(e)} onChange={(e)=> this.onChange(e)} classNAme="mt-5 mb-5">
               <input
               type="file"
               name="image"
               id="file"
-              accept=".jpeg, .png, .jpg"
+              accept="image/*"
               />
               <input type="submit"/>
         </form>
 
-        <Button onClick={() => this.setNewItem()} variant="primary">Add item</Button>
-    
         {this.state.msgItem=='Successfully added a new item :)' && (<Alert variant='success' className="w-25">
             {this.state.msgItem}
         </Alert>)}
@@ -147,5 +132,13 @@ class Add extends Component {
     }
   }
   
+  const mapStateToProps = (state) => ({
+    itemTypes: state.items.itemTypes,
+  });
+  
+  const mapDispatchToProps = (dispatch) => ({
+    onGetTypes: (payload) => dispatch(getTypes(payload)),
+  });
+  
 
-  export default Add;
+  export default connect(mapStateToProps, mapDispatchToProps)(Add);
