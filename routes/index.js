@@ -6,6 +6,8 @@ const jwt = require('jsonwebtoken');
 const exjwt = require('express-jwt');
 
 
+
+
 const router = express.Router();
   
   router.post('/signup', async (req, res) => {
@@ -129,11 +131,10 @@ router.get('/types/:typeX', async (req,res) => {
 
 router.post('/new/item', async (req,res) => {
     try{
-
-            let add = await db.addItem(req.body.name,req.body.item_type_id, req.body.price,req.body.picture);
-            res.json(add);   
+        let add = await db.addItem(req.body.name,req.body.item_type_id, req.body.price,req.body.picture);
+        res.json(add);   
     
-       
+      
             
     }catch(e) {
         res.sendStatus(500);

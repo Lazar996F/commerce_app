@@ -72,7 +72,7 @@ class Edit_item extends Component {
               <th>#</th>
               <th>ITEM NAME</th>
               <th>ITEM TYPE</th>
-              <th>PRICE $</th>
+              <th>PRICE</th>
               <th></th>
             </tr>
           </thead>
@@ -82,7 +82,7 @@ class Edit_item extends Component {
                 <td>{index + 1}</td>
                 <td>{item.name}</td>
                 <td>{item.type_name}</td>
-                <td>{item.item_price}</td>
+                <td>$ {item.item_price}</td>
                 <td>
                   <Button onClick={()=> this.setState({showModal:true,chosenID:item.id,IDtype:item.item_type_id,chosenName:item.name,chosenPrice:item.item_price,chosenTypeName:item.type_name})} className="mr-5" variant="outline-info">Edit</Button>
                   <Button variant="outline-danger" onClick={() => { this.deleteItem(item.id,index)}} >Delete</Button>

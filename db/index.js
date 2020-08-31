@@ -32,7 +32,7 @@ commerce.allItems = () => {
 commerce.soldAll = () => {
 
     return new Promise ((resolve,reject) => {
-        pool.query(`SELECT si.id, i.name, it.type_name, i.item_price, si.date_sold FROM sold_items AS si INNER JOIN items AS i ON si.item_id=i.id INNER JOIN items_type AS it ON i.item_type_id=it.id`, (error,results) => {
+        pool.query(`SELECT si.id, i.name, it.type_name, i.item_price, i.picture, si.date_sold FROM sold_items AS si INNER JOIN items AS i ON si.item_id=i.id INNER JOIN items_type AS it ON i.item_type_id=it.id`, (error,results) => {
             if(error){
                 return reject(error);
             }
@@ -43,7 +43,7 @@ commerce.soldAll = () => {
 
 commerce.bestSeller = () => {
     return new Promise ((resolve,reject) => {
-        pool.query(`SELECT item_id, items.name, items.item_price, COUNT(sold_items.id) bs FROM sold_items INNER JOIN items ON items.id=item_id GROUP BY item_id,items.name, items.item_price ORDER BY bs DESC`, (error,results) => {
+        pool.query(`SELECT item_id, items.name, items.item_price, COUNT(sold_items.id) bs FROM sold_items INNER JOIN items ON items.id=item_id GROUP BY item_id,items.name, items.item_price ORDER BY bs DESC LIMIT 3`, (error,results) => {
             if(error){
                 return reject(error);
             }
@@ -54,7 +54,7 @@ commerce.bestSeller = () => {
 
 commerce.mostExpensive = () => {
     return new Promise ((resolve,reject) => {
-        pool.query(`SELECT item_id,name,item_price, COUNT (sold_items.id) number FROM sold_items INNER JOIN items ON items.id = item_id GROUP BY item_id,items.name HAVING COUNT(sold_items.id)>=3 ORDER BY item_price DESC`, (error,results) => {
+        pool.query(`SELECT item_id,name,item_price, COUNT (sold_items.id) number FROM sold_items INNER JOIN items ON items.id = item_id GROUP BY item_id,items.name HAVING COUNT(sold_items.id)>=3 ORDER BY item_price `, (error,results) => {
             if(error){
                 return reject(error);
             }
@@ -66,7 +66,7 @@ commerce.mostExpensive = () => {
 commerce.dateSold = (month) => {
     return new Promise ((resolve,reject) => {
 
-        pool.query(`SELECT item_id,date_sold,items.name FROM sold_items INNER JOIN items ON items.id=item_id WHERE MONTH(date_sold)!=? GROUP BY items.name`,[month], (error,results) => {
+        pool.query(`SELECT item_id,date_sold,items.name,items.id FROM sold_items INNER JOIN items ON items.id=item_id WHERE MONTH(date_sold)!=? GROUP BY items.name`,[month], (error,results) => {
             if(error){
                 return reject(error);
             }

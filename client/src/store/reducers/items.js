@@ -2,7 +2,6 @@ import * as actionTypes from "../actionTypes";
 
 
 
-
 const updateObject = (oldObject, updatedProperties) => {
     return {
       ...oldObject,

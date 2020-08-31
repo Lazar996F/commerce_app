@@ -9,38 +9,59 @@ import Add from './components/add_item/add'
 import DeleteItem from './components/delete_item/deleteItem'
 import Edit_item from './components/Edit/edit_item'
 import Cart from './components/cart/cart'
-
 import { Provider } from 'react-redux'
 import {createStore, applyMiddleware, combineReducers } from 'redux'
 import itemsReducer from './store/reducers/items.js'
 import salesReducer from './store/reducers/sales.js'
 import thunk from 'redux-thunk';
 import Home from './components/home/home'
+import storage from 'redux-persist/lib/storage';
+import { createMigrate, persistStore, persistReducer } from 'redux-persist';
 
-const rootReducer = combineReducers({
+const migrations = {
+  1: (state) => {
+    return {
+        ...state,
+    }
+  }
+}
+
+const persistConfig = {
+  key: "root",
+  storage: storage,
+  migrate: createMigrate(migrations, {debug: false})
+}
+
+/* const rootReducer = combineReducers({
   items: itemsReducer,
   sales: salesReducer
-});
+}); */
+
+const reducers = persistReducer(
+  persistConfig,
+  combineReducers({
+    items: itemsReducer,
+    sales: salesReducer
+  })
+)
 
 
-const store = createStore(rootReducer, applyMiddleware(thunk))
+const store = createStore(reducers, applyMiddleware(thunk))
+const persistor = persistStore(store)
 
 
 ReactDOM.render(
   <React.StrictMode>
       <Router>
       <Provider store={store}>
-        <App />
+       <App />
             <Route path="/" exact component={Home}/>
           <Route path="/sales" component={Sales} />
           <Route path="/add/items" component={Add}/>
           <Route path="/edit/items" component={Edit_item}/>
-          <Route path="/cart" component={Cart}/>
-          
-
-
+          <Route path="/cart" component={Cart}/>          
           </Provider>
-      </Router>
+    </Router>
   </React.StrictMode>,
   document.getElementById('root')
 );

@@ -78,7 +78,7 @@ class Cart extends Component {
   <Row>
     {this.props.addedCart.length>0 ? (<Col md={8}>
     <ListGroup className="padd-custom">
-          <h2 className="mt-5">Shopping Cart</h2>
+          <h2 className="mt-5">Your Cart</h2>
           {this.props.addedCart.map( (additem, index) => (
             <ListGroup.Item key={index}>
               <Row>
@@ -101,10 +101,9 @@ class Cart extends Component {
         </ListGroup>
         
         <span className="">{this.state.message}</span>
-    </Col>) : (<h2 className="pl-5 pt-5">Shopping Cart is empty :(</h2>)}
+    </Col>) : (<h3 className="pl-5 pt-5">Cart is empty</h3>)}
     {this.props.addedCart.length>0 && <Col md={4} className="text-center pt-5">
           <h4 className="mt-2 mb-5">SUBTOTAL({this.props.addedCart.length} Items): $ {this.totalPrice()} </h4>
-    
     <Form>
   <Form.Group controlId="exampleForm.ControlInput1">
     <Form.Label>Your Name</Form.Label>
@@ -127,10 +126,10 @@ class Cart extends Component {
     </Col>}
       </Row>
       {this.state.isSuccess && <Alert variant='success' className="w-25">
-    {this.state.message}
+      <p>{this.state.message}</p>
   </Alert>}
   {!this.state.isSuccess && this.props.addedCart.lenght>0 && <Alert variant='danger' className="w-25">
-    {this.state.message}
+  <p>{this.state.message}</p>
   </Alert>}
       </Container>
     );

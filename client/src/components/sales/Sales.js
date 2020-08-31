@@ -2,7 +2,7 @@
 import React, { Component } from 'react';
 import './sales.css';
 import 'bootstrap/dist/css/bootstrap.css';
-import { Form, Col, Button, Table, Row, Container, Dropdown, ButtonGroup } from 'react-bootstrap';
+import { Form, Col, Button, Table, Row, Container, Dropdown, ButtonGroup ,Modal,Image} from 'react-bootstrap';
 import moment from 'moment';
 
 
@@ -19,7 +19,13 @@ class Sales extends Component {
       isBS: false,
       isME: false,
       isMonth: false,
-      selectedMonth: 0
+      selectedMonth: 0,
+      showModal:false,
+      info_name:'',
+      info_type:'',
+      info_date:'',
+      info_image:'',
+      info_price:0
     }
   }
 
@@ -29,11 +35,12 @@ class Sales extends Component {
       .then(sold => this.setState({ sold }, () => console.log('Items fetched..', sold)))
     fetch('api/sold/bs')
       .then(res => res.json())
-      .then(bestSeller => this.setState({ bestSeller }, () => console.log('Bestseller items fetched...', bestSeller)))
+      .then(bestSeller => this.setState({ bestSeller,info_bestseller:bestSeller[0].bs }, () => console.log('Bestseller items fetched...', bestSeller)))
     fetch('api/sold/3x')
       .then(res => res.json())
       .then(mostExpensive => this.setState({ mostExpensive }, () => console.log('Most expensive items fetched...', mostExpensive)))
   }
+
 
 
 
@@ -44,63 +51,47 @@ class Sales extends Component {
       .then(monthNotSold => this.setState({ monthNotSold }, () => console.log('Month not sold items fetched...', monthNotSold)))
   }
 
+  itemInfo = (name, type,date,image,price) => {
+    this.setState({showModal:true,info_name:name,info_type:type,info_date:date,info_image:image,info_price:price})
+
+  }
+
+
   render() {
 
     return (
-      <Container>
-        {/* <Button onClick={() => this.setState({ isBS:false, isME:false ,isAll:true})} variant="info" size="lg" className="main-btn">
-          List of sales records
-        </Button> */}
+      <Container fluid>
+
         
-        {/* <Container className="mb-5">
-          <Row>
-            <Col><Button onClick={() => this.setState({ isBS: true, isME: false,isAll:false,isMonth:false})} variant="info">Bestseller</Button></Col>
-            <Col><Button onClick={() => this.setState({ isME: true, isBS: false,isAll:false,isMonth:false })} variant="info">The most expensive, sold 3 or more times</Button></Col>
-            <Dropdown  onSelect={(e)=> this.setState({selectedMonth:e})}>
-              <Button onClick={() => this.setMonth()} variant="success">Not sold in :(chose month and click)</Button>
-              <Dropdown.Toggle split variant="success" id="dropdown-split-basic" />
-              <Dropdown.Menu>
-                <Dropdown.Item  eventKey={1}>January</Dropdown.Item>
-                <Dropdown.Item  eventKey={2} >February</Dropdown.Item>
-                <Dropdown.Item  eventKey={3}>Marth</Dropdown.Item>
-                <Dropdown.Item  eventKey={4}>April</Dropdown.Item>
-                <Dropdown.Item  eventKey={5}>May</Dropdown.Item>
-                <Dropdown.Item  eventKey={6}>June</Dropdown.Item>
-                <Dropdown.Item  eventKey={7}>July</Dropdown.Item>
-                <Dropdown.Item  eventKey={8}>August</Dropdown.Item>
-                <Dropdown.Item  eventKey={9}>September</Dropdown.Item>
-                <Dropdown.Item  eventKey={10}>October</Dropdown.Item>
-                <Dropdown.Item  eventKey={11}>November</Dropdown.Item>
-                <Dropdown.Item  eventKey={12}>December</Dropdown.Item>
-              </Dropdown.Menu>
-              
-            </Dropdown>
-          </Row>
-        </Container> */}
-
-        {/* ALL SOLD items */}
-
-        <Row className="p-5 text-center">
+<Row className="pt-5 pb-5 text-center">
           <Col md={4}>
-            <Button variant="outline-dark" className="butt" onClick={() => this.setState({ isBS:false, isME:false ,isAll:true})}>See all</Button>
+            <h4>All</h4>
+            <svg width="3em" height="3em" viewBox="0 0 16 16" class="bi bi-arrow-down-short" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+              <path fill-rule="evenodd" d="M8 4a.5.5 0 0 1 .5.5v5.793l2.146-2.147a.5.5 0 0 1 .708.708l-3 3a.5.5 0 0 1-.708 0l-3-3a.5.5 0 1 1 .708-.708L7.5 10.293V4.5A.5.5 0 0 1 8 4z"/>
+            </svg>
           </Col>
           <Col md={4}>
-            <Button variant="outline-dark" className="butt" onClick={() => this.setState({ isBS: true, isME: false,isAll:false,isMonth:false})}>Bestseller</Button>
+            <h4>Bestsellers</h4>
+            <svg width="3em" height="3em" viewBox="0 0 16 16" class="bi bi-arrow-down-short" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+              <path fill-rule="evenodd" d="M8 4a.5.5 0 0 1 .5.5v5.793l2.146-2.147a.5.5 0 0 1 .708.708l-3 3a.5.5 0 0 1-.708 0l-3-3a.5.5 0 1 1 .708-.708L7.5 10.293V4.5A.5.5 0 0 1 8 4z"/>
+            </svg>
           </Col>
           <Col md={4}>
-            <Button variant="outline-dark" className="butt" onClick={() => this.setState({ isME: true, isBS: false,isAll:false,isMonth:false })}>the most expensive</Button>
+            <h4>the most expensive which are sold 3 and more times</h4>
+            <svg width="3em" height="3em" viewBox="0 0 16 16" class="bi bi-arrow-down-short" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+              <path fill-rule="evenodd" d="M8 4a.5.5 0 0 1 .5.5v5.793l2.146-2.147a.5.5 0 0 1 .708.708l-3 3a.5.5 0 0 1-.708 0l-3-3a.5.5 0 1 1 .708-.708L7.5 10.293V4.5A.5.5 0 0 1 8 4z"/>
+            </svg>
           </Col>
         </Row>
+     <Row>
 
-      
-        {this.state.isAll && <Table striped bordered>
+      <Col md={4}>
+        <Table striped bordered>
           <thead>
             <tr>
               <th>#</th>
-              <th>ITEM NAME</th>
-              <th>ITEM TYPE</th>
-              <th>PRICE</th>
-              <th>Sell date</th>
+              <th className="text-center">ITEM NAME</th>
+              <th></th>
             </tr>
           </thead>
           <tbody>
@@ -108,25 +99,20 @@ class Sales extends Component {
               <tr>
                 <td>{index + 1}</td>
                 <td>{sold.name}</td>
-                <td>{sold.type_name}</td>
-                <td>$ {sold.item_price}</td>
-                <td>{moment(sold.date_sold).format('MMMM Do YYYY')}</td>
+
+                <td><Button variant="outline-info" onClick={()=> this.itemInfo(sold.name,sold.type_name,sold.date_sold,sold.picture,sold.item_price)}>Info</Button></td>
               </tr>))}
           </tbody>
-        </Table>}
+        </Table>
+        </Col>
      
-
-
-
-
-    
-        {this.state.isBS && (<Table striped bordered hover>
+    <Col md={4}>
+      <Table striped bordered hover>
           <thead>
             <tr>
               <th>#</th>
               <th>ITEM NAME</th>
-              <th>PRICE</th>
-              <th>Bestseller</th>
+              <th>Sold times</th>
             </tr>
           </thead>
           <tbody>
@@ -134,19 +120,18 @@ class Sales extends Component {
               <tr>
                 <td>{index + 1}</td>
                 <td>{bs.name}</td>
-                <td>{bs.item_price} $</td>
                 <td>{bs.bs}</td>
               </tr>))}
           </tbody>
-        </Table>)}
+        </Table>
+      </Col>
 
-    
-        {this.state.isME && (<Table striped bordered hover>
+    <Col md={4}>
+        <Table striped bordered hover>
           <thead>
             <tr>
               <th>#</th>
               <th>ITEM NAME</th>
-              <th>PRICE</th>
               <th>Sales counter</th>
             </tr>
           </thead>
@@ -155,11 +140,12 @@ class Sales extends Component {
               <tr>
                 <td>{index + 1}</td>
                 <td>{mostEx.name}</td>
-                <td>{mostEx.item_price} $</td>
                 <td>{mostEx.number}</td>
               </tr>))}
           </tbody>
-        </Table>)}
+        </Table>
+    </Col>
+
 
         {/* items not sold in x month 
         {this.state.isMonth && (<Table striped bordered hover>
@@ -177,7 +163,38 @@ class Sales extends Component {
               </tr>))}
           </tbody>
         </Table>)} */}
+       
+    <Modal aria-labelledby="contained-modal-title-vcenter"  show={this.state.showModal} onHide={()=> this.setState({showModal:false})}>
+      <Modal.Header closeButton>
+        <Modal.Title id="contained-modal-title-vcenter">
+         About item sales
+        </Modal.Title>
+      </Modal.Header>
+      <Modal.Body className="show-grid">
+        <Container>
+          <Row>
+            <Col  md={8}>
+              <Image src={this.state.info_image} thumbnail />
+            </Col>
+            <Col md={4}>
+            <p>PRICE: $ {this.state.info_price}</p>
+            </Col>
+            <Col  md={12}>
+              <h3>{this.state.info_name}</h3>
+              <p>{this.state.info_type}</p>
+            </Col>
+          </Row>
 
+          <Row>
+            <p className="pl-3">This item has been sold in: {moment(this.state.info_date).format('MMMM Do YYYY')}</p>
+          </Row>
+        </Container>
+      </Modal.Body>
+      <Modal.Footer>
+      </Modal.Footer>
+    </Modal>
+
+  </Row>
 </Container>
     );
   }

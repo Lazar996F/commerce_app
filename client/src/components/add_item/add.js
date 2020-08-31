@@ -2,7 +2,7 @@
 import React, { Component } from 'react';
 import './add.css';
 import 'bootstrap/dist/css/bootstrap.css';
-import { Table, Button, Form, Row, Col, Container,Alert } from 'react-bootstrap'
+import { Form, Row, Col, Container,Alert,Toast } from 'react-bootstrap'
 import { getTypes} from "../../store/actions/items";
 import { connect } from "react-redux";
 
@@ -21,18 +21,17 @@ class Add extends Component {
           typeValue: 0,
           typeName: null,
           base64TextString:'',
-          image:{}
+          image:{},
+          showToast:false
         }
       }
 
-
+      
       componentDidMount() {
             this.props.onGetTypes()
       }
     
 
-      
-      
     async setNewItem(e) {
       
 let tempValue=this.props.itemTypes[0].id
@@ -88,12 +87,12 @@ this.setState({image:file})
 
     render() {
       return (
-        <Container fluid className="mb-5 pb-5 mt-5">
-        <h2 className="text-center">INSERT NEW ITEM</h2>
-        <Form.Row>
+        <Container className="mb-5 pb-5 mt-5 pr-md-5">
+        <h2 className="mb-5 border-bottom pb-3">INSERT NEW ITEM</h2>
+        <Form.Row className="mb-5">
           <Form.Group as={Col} controlId="formGridCity">
             <Form.Label>Item name</Form.Label>
-            <Form.Control onChange={(event) => this.setState({ typeName: event.target.value })} type="text" />
+            <Form.Control onChange={(event) => this.setState({ typeName: event.target.value })} type="text"/>
           </Form.Group>
 
           <Form.Group as={Col} controlId="formGridState">
@@ -110,7 +109,8 @@ this.setState({image:file})
           </Form.Group>
         </Form.Row>
 
-        <form onSubmit={(e) => this.setNewItem(e)} onChange={(e)=> this.onChange(e)} classNAme="mt-5 mb-5">
+        <Form.Label className="mb-4">Click "Choose File" button to upload an image:</Form.Label>
+        <form onSubmit={(e) => this.setNewItem(e)} onClick={()=> this.setState({showToast:true})} onChange={(e)=> this.onChange(e)} classNAme="mt-5 mb-5">
               <input
               type="file"
               name="image"
@@ -120,14 +120,28 @@ this.setState({image:file})
               <input type="submit"/>
         </form>
 
-        {this.state.msgItem=='Successfully added a new item :)' && (<Alert variant='success' className="w-25">
-            {this.state.msgItem}
-        </Alert>)}
-            {this.state.msgItem=='Faild to add new item :(' && (<Alert variant='danger' className="w-25">
-            {this.state.msgItem}
-        </Alert>)}
+    
+    {this.state.msgItem=='Successfully added a new item :)' && <Row className="mt-5">
+      <Col xs={6}>
+        <Toast onClose={()=> this.setState({showToast:false})} show={this.state.showToast} delay={3000} autohide>
+          <Toast.Header>
+            <strong className="mr-auto"></strong>
+          </Toast.Header>
+          <Toast.Body ><h5 className="text-success">{this.state.msgItem}</h5></Toast.Body>
+        </Toast>
+      </Col>
+    </Row>}
+    {this.state.msgItem=='Faild to add new item :(' && <Row className="mt-5">
+      <Col xs={6}>
+        <Toast onClose={()=> this.setState({showToast:false})} show={this.state.showToast} delay={3000} autohide>
+          <Toast.Header>
+            <strong className="mr-auto"></strong>
+          </Toast.Header>
+          <Toast.Body ><h5 className="text-danger">{this.state.msgItem}</h5></Toast.Body>
+        </Toast>
+      </Col>
+    </Row>}
       </Container>
-
       ); 
     }
   }
