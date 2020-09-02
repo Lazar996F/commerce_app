@@ -83,8 +83,6 @@ this.setState({image:file})
       })
     }
 
-   
-
     render() {
       return (
         <Container className="mb-5 pb-5 mt-5 pr-md-5">
@@ -119,8 +117,6 @@ this.setState({image:file})
               />
               <input type="submit"/>
         </form>
-
-    
     {this.state.msgItem=='Successfully added a new item :)' && <Row className="mt-5">
       <Col xs={6}>
         <Toast onClose={()=> this.setState({showToast:false})} show={this.state.showToast} delay={3000} autohide>

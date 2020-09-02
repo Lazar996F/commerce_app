@@ -195,6 +195,9 @@ class Sales extends Component {
     </Modal>
 
   </Row>
+
+
+  
 </Container>
     );
   }
