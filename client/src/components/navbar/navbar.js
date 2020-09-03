@@ -6,7 +6,7 @@ import { connect } from "react-redux";
 
 class Bar extends Component {
   refreshPage = () => {
-    if (window.location.pathname === "/") window.location.reload(false);
+    if (window.location.pathname === "/home") window.location.reload(false);
   };
 
   render() {

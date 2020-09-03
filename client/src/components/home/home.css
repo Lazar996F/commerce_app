@@ -1,0 +1,72 @@
+.large-header {
+   position: relative;
+   width: 100%;
+   background: #111;
+   overflow: hidden;
+   background-size: cover;
+   background-position: center center;
+   z-index: 1;
+}
+
+.demo .large-header {
+   background-image: url("https://s3-us-west-2.amazonaws.com/s.cdpn.io/499416/demo-bg.jpg");
+}
+
+.main-title {
+   position: absolute;
+   margin: 0;
+   padding: 0;
+   color: #F9F1E9;
+   text-align: center;
+   top: 50%;
+   left: 50%;
+   -webkit-transform: translate3d(-50%, -50%, 0);
+   transform: translate3d(-50%, -50%, 0);
+}
+
+.demo .main-title {
+   text-transform: uppercase;
+   font-size: 4.2em;
+   letter-spacing: 0.1em;
+}
+
+.main-title .thin {
+   font-weight: 200;
+}
+
+@media only screen and (max-width: 768px) {
+   .demo .main-title {
+      font-size: 3em;
+   }
+}
+
+.overlay {
+   position: absolute; 
+   bottom: 0; 
+   background: rgb(0, 0, 0);
+   background: rgba(0, 0, 0, 0.5); /* Black see-through */
+   color: #f1f1f1; 
+   width: 100%;
+   transition: .5s ease;
+   opacity:0;
+   color: white;
+   font-size: 16px;
+   text-align: center;
+   max-width:100px;
+ }
+
+ .colHov:hover .overlay {
+   opacity: 1;
+ }
+
+ 
+ .zoom {
+   padding: 50px;
+   transition: transform .25s, visibility .25s ease-in;
+   width: 200px;
+   height: 200px;
+   margin: 0 auto;
+ }
+ .zoom:hover {
+     transform: scale(2) rotate(25deg);
+ }
