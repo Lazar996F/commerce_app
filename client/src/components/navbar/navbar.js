@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Navbar, Nav, Button, Modal, Table,InputGroup,DropdownButton,Dropdown,FormControl } from "react-bootstrap";
+import { Navbar, Nav, Button, Modal, Table,InputGroup,DropdownButton,Dropdown,FormControl} from "react-bootstrap";
 import "./navbar.css";
 import { Link } from "react-router-dom";
 import { connect } from "react-redux";
@@ -15,7 +15,7 @@ class Bar extends Component {
         <Navbar bg="dark" variant="dark">
           <Navbar.Brand
             as={Link}
-            to="/"
+            to="/home"
             className="pl-3"
             button
             onClick={() => this.refreshPage()}
@@ -25,7 +25,7 @@ class Bar extends Component {
           <Navbar.Toggle aria-controls="responsive-navbar-nav" />
           <Navbar.Collapse id="responsive-navbar-nav">
             <Nav className="mr-auto">
-              <Nav.Link as={Link} to="/add/items" className="pl-5">
+              <Nav.Link as={Link} to="/shop" className="pl-5">
                 Shop
               </Nav.Link>
             </Nav>

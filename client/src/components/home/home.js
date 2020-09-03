@@ -1,128 +1,41 @@
-
-import React, { Component } from 'react';
-import { Row, Col, Image,ListGroup} from 'react-bootstrap'
-import './home.css';
-import { Swiper, SwiperSlide } from 'swiper/react';
-import 'swiper/swiper.scss';
-import 'swiper/swiper-bundle.css';
-import image from '../../default.png';
-import SwipeCore, { Navigation, Pagination } from 'swiper'
-
-import { getItems, getTypes, setCart } from "../../store/actions/items";
-import { connect } from "react-redux";
-
-
-
-
-SwipeCore.use([Navigation, Pagination]);
+import React, { Component } from "react";
+import "./home.css";
+import "bootstrap/dist/css/bootstrap.css";
+import { Container, Carousel,Image } from "react-bootstrap";
+import moment from "moment";
 
 class Home extends Component {
-
-
-  constructor(props) {
-    super(props);
-    this.state = {
-      chosenType:0
-    }
-  }
-
-
-  componentDidMount() {
-    this.props.onGetItems()
-    this.props.onGetTypes()
-  }
-
-
-  
-  addToCart = (id, name, price,picture) => {
-    const { addedCart } = this.props;
-    const newCart = addedCart;
-    console.log("homaddToCartecart>", this.props.addedCart)
-    let addedItem = { item_id: id, name: name, price: price,picture:picture };
-    newCart.push(addedItem);
-    this.props.onSetCart(newCart);
-  }
-
   render() {
-    
     return (
-      <Row>
-        <Col md={4} className="firstCol-padd">
-          <h3 className="text-center mb-4">Category</h3>
-          <ListGroup variant="flush" className="text-center border-0">
-          {this.props.itemTypes.map( (type,index) => (
-            <ListGroup.Item action variant="light" key={index} onClick={() => this.setState({chosenType:type.id})}>{type.type_name}</ListGroup.Item>
-          ))}
-          </ListGroup>
-        </Col>
-        <Col md={6}>
-          {this.props.itemTypes.map((type, index) => (
-            <div key={index}>
-
-              {this.state.chosenType===0 && <Swiper className="mt-5"
-                spaceBetween={40}
-                slidesPerView={3}
-                navigation
-                loop
-              >
-                {this.props.items.map((item, index) => (
-                    item.item_type_id === type.id &&
-                  <SwiperSlide key={index} className="card">
-                    <Image src={item.picture} fluid thumbnail />
-                    <p className="title-item mt-0 mb-3">{item.name}</p>
-                    <p className="mb-0">Lorem ipsum dolor sit amet.</p>
-                    <p class="number-font">$ {item.item_price}</p>
-                    <button className="buttonX button5" onClick={() => this.addToCart(item.id, item.name, item.item_price,item.picture)}>Add to Cart</button>
-                  </SwiperSlide>
-                ))}
-              </Swiper>}
-            </div>
-          ))}
-
-        <ListGroup className="form-padding">
-          {this.props.items.map( (item, index) => (
-            item.item_type_id === this.state.chosenType &&
-            <ListGroup.Item key={index} className="border-top-0 border-right-0 border-left-0" >
-              <Row>
-                <Col md={2}>
-                  <Image src={item.picture} fluid className="pt-2"/>
-                </Col>
-                <Col md={7}>
-                  <h3>{item.name}</h3>
-                  <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
-                </Col>
-                <Col md={3}>
-                <p className="cart-fsize-padd">$ {item.item_price}</p>
-                <button className="buttonX button5 mt-5  ml-5" onClick={() => this.addToCart(item.id, item.name, item.item_price)}>Add to Cart</button>
-                </Col>
-              </Row>
-            </ListGroup.Item>
-          ))}
-        </ListGroup>
-        
-
-        </Col>
-
-        <Col md={2} className="text-center">
-        <button className="buttonX button5 mt-5" onClick={() => this.setState({chosenType:0})}>See all</button>
-        </Col>
-      </Row>
+      <Container>
+        <Carousel>
+          <Carousel.Item interval={1000}>
+          <Image rounded />
+            <Carousel.Caption>
+              <h3>First slide label</h3>
+              <p>Nulla vitae elit libero, a pharetra augue mollis interdum.</p>
+            </Carousel.Caption>
+          </Carousel.Item>
+          <Carousel.Item interval={500}>
+          <Image  rounded />
+            <Carousel.Caption>
+              <h3>Second slide label</h3>
+              <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+            </Carousel.Caption>
+          </Carousel.Item>
+          <Carousel.Item>
+          <Image  rounded />
+            <Carousel.Caption>
+              <h3>Third slide label</h3>
+              <p>
+                Praesent commodo cursus magna, vel scelerisque nisl consectetur.
+              </p>
+            </Carousel.Caption>
+          </Carousel.Item>
+        </Carousel>
+      </Container>
     );
   }
 }
 
-
-const mapStateToProps = (state) => ({
-  items: state.items.itemsRedux,
-  itemTypes: state.items.itemTypes,
-  addedCart: state.items.addedToCart,
-});
-
-const mapDispatchToProps = (dispatch) => ({
-  onGetItems: (payload) => dispatch(getItems(payload)),
-  onGetTypes: (payload) => dispatch(getTypes(payload)),
-  onSetCart: (payload) => dispatch(setCart(payload)),
-});
-
-
-export default connect(mapStateToProps, mapDispatchToProps)(Home);
+export default Home;
