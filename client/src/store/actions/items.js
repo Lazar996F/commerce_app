@@ -31,7 +31,7 @@ export const getTypesFail = (err) => {
 
 
 export const getTypes = payload => (dispatch) => {
-      fetch('/api/types')
+      fetch(`/api/types`)
       .then(res => res.json())
       .then(types => dispatch(getTypesSuccess(types)))
       .catch(err => dispatch(getTypesFail(err)))

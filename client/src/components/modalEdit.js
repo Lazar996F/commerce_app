@@ -14,7 +14,7 @@ class EditModal extends Component {
       itemTypes: [],
       msgItem: '',
       newPrice: 0,
-      typeName: null,
+      typeName: '',
       chosenType:0,
       newName: '',
       id_type: 0
@@ -27,7 +27,7 @@ class EditModal extends Component {
     fetch('api/types')
       .then(res => res.json())
       .then(itemTypes => {
-        this.setState({ itemTypes});
+        this.setState({itemTypes});
       })
   }
 

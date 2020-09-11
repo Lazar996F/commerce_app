@@ -118,15 +118,7 @@ router.get('/types', async (req,res) => {
     }
 });
 
-router.get('/types/:typeX', async (req,res) => {
-    try{
-        let results= await db.oneType(req.params.typeX);
-        res.json(results);
-    }catch(e) {
-        console.log(e);
-        res.sendStatus(500);
-    }
-});
+
 
 
 router.post('/new/item', async (req,res) => {

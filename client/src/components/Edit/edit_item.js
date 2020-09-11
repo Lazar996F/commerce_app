@@ -3,7 +3,8 @@ import React, { Component } from 'react';
 import 'bootstrap/dist/css/bootstrap.css';
 import { Table, Button, Form, Row, Col, Container,Alert,InputGroup} from 'react-bootstrap'
 import EditModal from '../modalEdit';
-
+import { getItems} from "../../store/actions/items";
+import { connect } from "react-redux";
 
 
 
@@ -30,9 +31,7 @@ class Edit_item extends Component {
       }
 
       componentDidMount() {
-        fetch('/api/items')
-          .then(res => res.json())
-          .then(items => this.setState({ items }, () => console.log('Items fetched..', items)))
+        this.props.onGetItems();
       }
 
       async deleteItem(deleteID,index) {
@@ -77,7 +76,7 @@ class Edit_item extends Component {
             </tr>
           </thead>
           <tbody>
-            {this.state.items.map((item, index) => (
+            {this.props.items.map((item, index) => (
               <tr key={index}>
                 <td>{index + 1}</td>
                 <td>{item.name}</td>
@@ -101,4 +100,11 @@ class Edit_item extends Component {
   }
 }
 
-export default Edit_item;
+const mapStateToProps = (state) => ({
+  items: state.items.itemsRedux
+});
+const mapDispatchToProps = (dispatch) => ({
+  onGetItems: (payload) => dispatch(getItems(payload))
+});
+
+export default connect(mapStateToProps,mapDispatchToProps)(Edit_item);

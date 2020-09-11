@@ -62,11 +62,14 @@
  
  .zoom {
    padding: 50px;
-   transition: transform .25s, visibility .25s ease-in;
+   transition: transform .45s, visibility .25s ease-in;
    width: 200px;
-   height: 200px;
+   height: 180px;
    margin: 0 auto;
+
  }
  .zoom:hover {
-     transform: scale(2) rotate(25deg);
+   transform: scale(1.2); 
+     opacity: 0.5;
  }
+

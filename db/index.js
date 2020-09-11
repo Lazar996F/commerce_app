@@ -108,7 +108,18 @@ commerce.addSale = (items,newDate) => {
 
 commerce.types = () => {
     return new Promise ((resolve,reject) => {
-        pool.query(`SELECT id,type_name FROM items_type;`, (error,results) => {
+        pool.query(`SELECT id,type_name FROM items_type `, (error,results) => {
+            if(error){
+                return reject(error);
+            }
+            return resolve(results);
+        });
+    });
+};
+
+commerce.types = () => {
+    return new Promise ((resolve,reject) => {
+        pool.query(`SELECT id,type_name FROM items_type`,(error,results) => {
             if(error){
                 return reject(error);
             }

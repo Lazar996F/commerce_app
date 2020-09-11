@@ -77,19 +77,19 @@ class Cart extends Component {
       <Container fluid>
   <Row>
     {this.props.addedCart.length>0 ? (<Col md={8}>
-    <ListGroup className="padd-custom">
+    <ListGroup className="padd-custom border-0">
           <h2 className="mt-5">Your Cart</h2>
           {this.props.addedCart.map( (additem, index) => (
-            <ListGroup.Item key={index}>
+            <ListGroup.Item key={index} >
               <Row>
-                <Col md={2}>
+                <Col md={3}>
                   <Image src={additem.picture} fluid/>
                 </Col>
-                <Col md={5}>
+                <Col md={4}>
                   <h3>{additem.name}</h3>
                   <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
                 </Col>
-                <Col md={5}>
+                <Col md={2}>
                 <button onClick={() => this.removeFromCart(additem.id)} type="button" class="close" aria-label="Close">
                   <span aria-hidden="true">&times;</span>
                 </button>

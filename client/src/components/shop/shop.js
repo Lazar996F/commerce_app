@@ -56,7 +56,7 @@ class Shop extends Component {
               {this.state.chosenType === 0 && (
                 <Swiper
                   className="mt-5"
-                  spaceBetween={40}
+                  spaceBetween={50}
                   slidesPerView={3}
                   navigation
                   loop
@@ -65,7 +65,7 @@ class Shop extends Component {
                     (item, index) =>
                       item.item_type_id === type.id && (
                         <SwiperSlide key={index} className="card">
-                          <Image src={item.picture} rounded />
+                          <Image src={item.picture} rounded  />
                           <p className="title-item mt-0 mb-3">{item.name}</p>
                           <p className="mb-0">Lorem ipsum dolor sit amet.</p>
                           <p class="number-font">$ {item.item_price}</p>
