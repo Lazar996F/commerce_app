@@ -12,8 +12,8 @@ import { connect } from "react-redux";
 SwipeCore.use([Navigation, Pagination]);
 
 class Shop extends Component {
-  constructor(props) {
-    super(props);
+  constructor() {
+    super();
     this.state = {
       chosenType: 0,
     };
@@ -37,7 +37,7 @@ class Shop extends Component {
     return (
       <Row>
         <Col md={4} className="firstCol-padd">
-          <ListGroup variant="flush" className="text-center border-0">
+          <ListGroup className="text-center border-0">
             {this.props.itemTypes.map((type, index) => (
               <ListGroup.Item
                 action
