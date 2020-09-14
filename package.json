@@ -27,7 +27,8 @@
     "react-toastify": "^6.0.8",
     "redux": "^4.0.5",
     "redux-persist": "^6.0.0",
-    "redux-thunk": "^2.3.0"
+    "redux-thunk": "^2.3.0",
+    "shards-react": "^1.0.3"
   },
   "devDependencies": {
     "nodemon": "^2.0.4"

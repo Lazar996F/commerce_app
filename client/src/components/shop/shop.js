@@ -1,5 +1,12 @@
 import React, { Component } from "react";
-import { Row, Col, Image, ListGroup,FormControl,InputGroup} from "react-bootstrap";
+import {
+  Row,
+  Col,
+  Image,
+  ListGroup,
+  FormControl,
+  InputGroup,
+} from "react-bootstrap";
 import "./shop.css";
 import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/swiper.scss";
@@ -8,6 +15,8 @@ import SwipeCore, { Navigation, Pagination } from "swiper";
 
 import { getItems, getTypes, setCart } from "../../store/actions/items";
 import { connect } from "react-redux";
+import {Card, CardBody, CardImg } from 'shards-react';
+
 
 SwipeCore.use([Navigation, Pagination]);
 
@@ -65,8 +74,10 @@ class Shop extends Component {
                     (item, index) =>
                       item.item_type_id === type.id && (
                         <SwiperSlide key={index} className="card">
-                          <Image src={item.picture} rounded  />
-                          <p className="title-item mt-0 mb-3">{item.name}</p>
+                          <Card>
+                            <CardImg top src={item.picture} />
+                            <CardBody>
+                            <p className="title-item mt-0 mb-3">{item.name}</p>
                           <p className="mb-0">Lorem ipsum dolor sit amet.</p>
                           <p class="number-font">$ {item.item_price}</p>
                           <button
@@ -82,6 +93,8 @@ class Shop extends Component {
                           >
                             Add to Cart
                           </button>
+                            </CardBody>
+                          </Card>
                         </SwiperSlide>
                       )
                   )}
