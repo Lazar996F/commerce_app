@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+
 import {
   Row,
   Col,
@@ -58,6 +59,22 @@ class Shop extends Component {
               </ListGroup.Item>
             ))}
           </ListGroup>
+
+          <div class="coupon">
+  <div class="container">
+    <h3>Promotion</h3>
+  </div>
+  <div class="container">
+    <h2><b>20% OFF YOUR PURCHASE</b></h2> 
+    <p>Lorem ipsum dolor sit amet, et nam pertinax gloriatur. Sea te minim soleat senserit, ex quo luptatum tacimates voluptatum, salutandi delicatissimi eam ea. In sed nullam laboramus appellantur, mei ei omnis dolorem mnesarchum.</p>
+  </div>
+  <div class="container">
+    <p>Use Promo Code: <span class="promo">BOH232</span></p>
+    <p class="expire">Expires: Jan 03, 2021</p>
+  </div>
+</div>
+
+ 
         </Col>
         <Col md={6}>
           {this.props.itemTypes.map((type, index) => (
@@ -65,7 +82,7 @@ class Shop extends Component {
               {this.state.chosenType === 0 && (
                 <Swiper
                   className="mt-5"
-                  spaceBetween={50}
+                  spaceBetween={30}
                   slidesPerView={3}
                   navigation
                   loop
@@ -75,7 +92,7 @@ class Shop extends Component {
                       item.item_type_id === type.id && (
                         <SwiperSlide key={index} className="card">
                           <Card>
-                            <CardImg top src={item.picture} />
+                            <CardImg top src={item.picture}  />
                             <CardBody>
                             <p className="title-item mt-0 mb-3">{item.name}</p>
                           <p className="mb-0">Lorem ipsum dolor sit amet.</p>

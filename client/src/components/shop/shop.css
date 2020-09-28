@@ -153,6 +153,39 @@ light.list-group-item-action:focus {
   color: #b5b6b7!important;
 }
 
+.card-img, .card-img-top, .card-img-bottom {
+    flex-shrink: 0;
+    width: 100%;
+    padding: 29px;
+}
 
+.coupon {
+  border: 5px dotted #bbb;
+  width: 80%;
+  border-radius: 15px;
+  margin: 0 auto;
+  max-width: 600px;
+}
 
+.container {
+  padding: 2px 16px;
+  background-color: #f1f1f1;
+}
 
+.promo {
+  background: #ccc;
+  padding: 3px;
+}
+
+.expire {
+  color: red;
+}
+
+.coupon {
+  border: 5px dotted #bbb;
+  width: 80%;
+  margin: 0 auto;
+  max-width: 600px;
+  margin-top: 330px;
+  border-radius:0px!important;
+}
